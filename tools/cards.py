@@ -1,0 +1,180 @@
+"""식탁노트 카드 이미지 생성기.
+
+content/*.md 앞부분(front matter)의 `cards:` 목록을 읽어
+assets/cards/<slug>-<id>.png (1200x675) 로 그린다.
+
+카드 종류
+  title   : title, sub
+  steps   : title, steps[{head, note}]
+  columns : title, cols[{head, value?, lines[], tone? (good|mid|bad)}]
+"""
+import html
+import pathlib
+import sys
+
+from playwright.sync_api import sync_playwright
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+from content import load_posts  # noqa: E402
+
+OUT = ROOT / "assets" / "cards"
+W, H = 1200, 675
+
+BASE_CSS = """
+:root{
+  --bg:#faf8f3; --ink:#2b2620; --muted:#857d70; --line:#e6e0d2;
+  --accent:#3c5b45; --sage:#e3ebe1; --paper:#ffffff;
+  --good:#2f6b45; --good-bg:#e4efe6;
+  --mid:#9a6216;  --mid-bg:#f5ead7;
+  --bad:#a3392b;  --bad-bg:#f6e2dd;
+  --serif:'Noto Serif CJK KR', serif;
+  --sans:'Noto Sans CJK KR', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:%dpx;height:%dpx;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+  position:relative;padding:56px 72px 52px;display:flex;flex-direction:column;word-break:keep-all;overflow-wrap:break-word}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
+.mark{font-family:var(--serif);font-weight:700;font-size:30px;letter-spacing:-.01em}
+.mark span{color:var(--accent)}
+.eyebrow{font-size:20px;font-weight:700;color:var(--accent);background:var(--sage);
+  padding:8px 18px;border-radius:999px;letter-spacing:.04em}
+.foot{position:absolute;right:72px;bottom:34px;font-size:19px;color:var(--muted);letter-spacing:.03em}
+h1{font-family:var(--serif);font-weight:700;letter-spacing:-.02em;line-height:1.25}
+""" % (W, H)
+
+TITLE_CSS = """
+.plate{position:absolute;right:-170px;top:50%;width:620px;height:620px;transform:translateY(-44%);
+  border-radius:50%;border:2px solid #d7e2d4;}
+.plate::before{content:"";position:absolute;inset:48px;border-radius:50%;border:2px solid #d7e2d4;background:#eef3ec}
+.plate::after{content:"";position:absolute;inset:150px;border-radius:50%;background:#e3ebe1}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:760px;position:relative;z-index:1}
+.body h1{font-size:76px;margin-bottom:28px}
+.body p{font-size:32px;color:var(--muted);line-height:1.5}
+.rule{width:72px;height:6px;background:var(--accent);border-radius:3px;margin-bottom:32px}
+"""
+
+STEPS_CSS = """
+h1.t{font-size:52px;margin-bottom:8px}
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:30px}
+.row{display:flex;align-items:stretch;gap:0}
+.step{flex:1;background:var(--paper);border:2px solid var(--line);border-radius:22px;
+  padding:32px 26px 36px;display:flex;flex-direction:column;gap:16px}
+.num{width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;
+  font-family:var(--serif);font-weight:700;font-size:34px;display:flex;align-items:center;justify-content:center}
+.step b{font-size:var(--hs);line-height:1.3;font-weight:700}
+.step span{font-size:var(--ns);color:var(--muted);line-height:1.45}
+.arrow{width:44px;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:34px;font-weight:700}
+"""
+
+COLS_CSS = """
+h1.t{font-size:52px;margin-bottom:8px}
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:30px}
+.grid{display:grid;gap:22px}
+.col{background:var(--paper);border:2px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}
+.col .hd{padding:20px 26px;font-size:var(--hs);font-weight:700;background:#f1ede3}
+.col.good .hd{background:var(--good-bg);color:var(--good)}
+.col.mid .hd{background:var(--mid-bg);color:var(--mid)}
+.col.bad .hd{background:var(--bad-bg);color:var(--bad)}
+.col .bd{padding:24px 26px 30px;display:flex;flex-direction:column;gap:14px}
+.col .val{font-family:var(--serif);font-weight:700;font-size:var(--vs);color:var(--accent);line-height:1.2;margin-bottom:4px}
+.col.bad .val{color:var(--bad)} .col.mid .val{color:var(--mid)}
+.col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.col li{font-size:var(--ls);line-height:1.4;padding-left:20px;position:relative}
+.col li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;border-radius:50%;background:#b9b1a3}
+.col.good li::before{background:var(--good)} .col.mid li::before{background:var(--mid)} .col.bad li::before{background:var(--bad)}
+"""
+
+e = html.escape
+
+
+def frame(post, inner, css):
+    return f"""<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<style>{BASE_CSS}{css}</style></head><body>
+<div class="top"><div class="mark">식탁<span>노트</span></div><div class="eyebrow">{e(post['category'])}</div></div>
+{inner}
+<div class="foot">siktaknote.com</div>
+</body></html>"""
+
+
+def render_title(post, c):
+    inner = f"""<div class="plate"></div>
+<div class="body"><div class="rule"></div><h1>{e(c['title'])}</h1><p>{e(c.get('sub', ''))}</p></div>"""
+    return frame(post, inner, TITLE_CSS)
+
+
+def render_steps(post, c):
+    steps = c["steps"]
+    n = len(steps)
+    hs, ns = (38, 28) if n <= 3 else (33, 25)
+    parts = []
+    for i, s in enumerate(steps, 1):
+        parts.append(
+            f'<div class="step"><div class="num">{i}</div><b>{e(s["head"])}</b>'
+            f'<span>{e(s.get("note", ""))}</span></div>'
+        )
+        if i < n:
+            parts.append('<div class="arrow">→</div>')
+    inner = f'<h1 class="t">{e(c["title"])}</h1><div class="stage"><div class="row" style="--hs:{hs}px;--ns:{ns}px">{"".join(parts)}</div></div>'
+    return frame(post, inner, STEPS_CSS)
+
+
+def render_columns(post, c):
+    cols = c["cols"]
+    n = len(cols)
+    sizes = {2: (38, 52, 32), 3: (34, 46, 29), 4: (30, 38, 26)}[min(max(n, 2), 4)]
+    hs, vs, ls = sizes
+    items = []
+    for col in cols:
+        tone = col.get("tone", "")
+        val = f'<div class="val">{e(col["value"])}</div>' if col.get("value") else ""
+        lis = "".join(f"<li>{e(x)}</li>" for x in col.get("lines", []))
+        items.append(f'<div class="col {tone}"><div class="hd">{e(col["head"])}</div><div class="bd">{val}<ul>{lis}</ul></div></div>')
+    inner = (
+        f'<h1 class="t">{e(c["title"])}</h1>'
+        f'<div class="stage"><div class="grid" style="grid-template-columns:repeat({n},1fr);--hs:{hs}px;--vs:{vs}px;--ls:{ls}px">{"".join(items)}</div></div>'
+    )
+    return frame(post, inner, COLS_CSS)
+
+
+RENDER = {"title": render_title, "steps": render_steps, "columns": render_columns}
+
+
+def card_alt(c):
+    """카드에 적힌 글을 한 줄로 — 이미지 대체 텍스트와 검색용."""
+    bits = [c["title"]]
+    if c["type"] == "title":
+        bits.append(c.get("sub", ""))
+    elif c["type"] == "steps":
+        bits += [f'{i}. {s["head"]}' + (f' ({s["note"]})' if s.get("note") else "") for i, s in enumerate(c["steps"], 1)]
+    else:
+        for col in c["cols"]:
+            seg = col["head"]
+            if col.get("value"):
+                seg += f' {col["value"]}'
+            if col.get("lines"):
+                seg += ": " + ", ".join(col["lines"])
+            bits.append(seg)
+    return " — ".join(b for b in bits if b)
+
+
+def main(only=None):
+    OUT.mkdir(parents=True, exist_ok=True)
+    posts = load_posts()
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(viewport={"width": W, "height": H}, device_scale_factor=1)
+        for post in posts:
+            if only and post["slug"] not in only:
+                continue
+            for c in post.get("cards", []):
+                page.set_content(RENDER[c["type"]](post, c), wait_until="load")
+                out = OUT / f'{post["slug"]}-{c["id"]}.png'
+                page.screenshot(path=str(out), full_page=False)
+                print("card", out.relative_to(ROOT))
+        browser.close()
+
+
+if __name__ == "__main__":
+    main(set(sys.argv[1:]) or None)
