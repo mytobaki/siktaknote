@@ -1,0 +1,304 @@
+<title>식탁노트</title>
+<style>
+/*
+  레이아웃: 매거진형 1페이지 구조 — 목록(그리드 카드) ↔ 본문(단일 읽기 컬럼)을
+  하나의 페이지 안에서 전환하는 SPA. 사진·캔바 자리는 실제 발행 전까지
+  점선 플레이스홀더로 표시해 대표가 어떤 그림이 들어갈지 바로 확인 가능.
+*/
+:root{
+  --bg:#faf8f3;
+  --surface:#ffffff;
+  --surface-sunken:#f1ede3;
+  --fg:#2b2620;
+  --muted:#8a8275;
+  --border:#e6e0d2;
+  --accent:#3c5b45;
+  --accent-fg:#f3f6f1;
+  --accent-soft:#e3ebe1;
+  --font-display:'Noto Serif KR', 'Nanum Myeongjo', serif;
+  --font-body:'Noto Sans KR', -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1c1b17; --surface:#242220; --surface-sunken:#2b2824;
+    --fg:#ece7dc; --muted:#9c9484; --border:#3a362f;
+    --accent:#86ac8f; --accent-fg:#162018; --accent-soft:#2c3630;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1c1b17; --surface:#242220; --surface-sunken:#2b2824;
+  --fg:#ece7dc; --muted:#9c9484; --border:#3a362f;
+  --accent:#86ac8f; --accent-fg:#162018; --accent-soft:#2c3630;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.7}
+a{color:inherit}
+img{max-width:100%}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+
+/* header */
+.site-header{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:10;
+  background:var(--bg);border-bottom:1px solid var(--border);
+}
+.header-inner{
+  max-width:1040px;margin:0 auto;padding:16px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.logo{font-family:var(--font-display);font-weight:700;font-size:1.5rem;letter-spacing:-0.01em;text-decoration:none;color:var(--fg)}
+.logo span{color:var(--accent)}
+nav.cats{display:flex;gap:4px;flex-wrap:wrap}
+nav.cats button{
+  font-family:var(--font-body);font-size:0.86rem;color:var(--muted);
+  background:transparent;border:none;padding:8px 12px;border-radius:999px;cursor:pointer;
+  transition:background .15s, color .15s;
+}
+nav.cats button:hover{background:var(--surface-sunken);color:var(--fg)}
+nav.cats button[aria-current="true"]{background:var(--accent-soft);color:var(--accent);font-weight:700}
+nav.cats button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* hero */
+.hero{padding-block:40px 28px}
+.tagline{font-size:0.95rem;color:var(--muted);max-width:60ch}
+.tagline strong{color:var(--fg)}
+
+/* photo / canva placeholders */
+.ph{
+  border:1.5px dashed var(--border);background:var(--surface-sunken);
+  color:var(--muted);display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;letter-spacing:.02em;border-radius:10px;min-height:0;
+}
+.ph-photo{aspect-ratio:4/3}
+.ph-canva{aspect-ratio:16/9}
+.ph b{color:var(--muted);font-weight:700}
+
+/* list grid */
+.feed-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding-block:8px 48px;
+}
+@media (max-width:760px){.feed-grid{grid-template-columns:1fr}}
+.card{
+  display:flex;flex-direction:column;gap:12px;border:1px solid var(--border);
+  background:var(--surface);border-radius:14px;padding:16px;cursor:pointer;
+  transition:border-color .15s, transform .15s;min-width:0;
+}
+.card:hover{border-color:var(--accent)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card.soon{cursor:default;opacity:.6}
+.badge-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.badge{
+  font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:999px;
+  background:var(--surface-sunken);color:var(--muted);letter-spacing:.02em;
+}
+.badge.flag{background:var(--accent);color:var(--accent-fg)}
+.card h3{
+  font-family:var(--font-display);font-size:1.12rem;line-height:1.4;margin:0;
+  text-wrap:balance;
+}
+.card p.sum{font-size:0.88rem;color:var(--muted);margin:0;flex:1}
+.card .meta{font-size:0.76rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* post detail */
+#view-post{padding-block:32px 64px}
+.post-col{max-width:640px;margin:0 auto}
+.back-btn{
+  background:none;border:none;color:var(--muted);font-size:0.88rem;cursor:pointer;
+  padding:6px 0;margin-bottom:20px;display:inline-flex;align-items:center;gap:6px;
+}
+.back-btn:hover{color:var(--accent)}
+.post-col .badge-row{margin-bottom:14px}
+.post-col h1{
+  font-family:var(--font-display);font-size:1.9rem;line-height:1.35;margin:0 0 10px;
+  text-wrap:balance;
+}
+.post-col .meta{color:var(--muted);font-size:0.82rem;margin-bottom:24px;font-variant-numeric:tabular-nums}
+.summary-box{
+  background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin-bottom:28px;
+}
+.summary-box p{margin:0 0 6px;font-size:0.95rem;color:var(--fg)}
+.summary-box p:last-child{margin-bottom:0}
+.summary-box b{color:var(--accent)}
+.post-col h2{
+  font-family:var(--font-display);font-size:1.18rem;margin:32px 0 12px;
+  border-top:1px solid var(--border);padding-top:24px;
+}
+.post-col h2:first-of-type{border-top:none;padding-top:0}
+.post-col p{margin:0 0 14px;font-size:0.98rem}
+.post-col ol,.post-col ul{margin:0 0 14px;padding-left:1.3em}
+.post-col li{margin-bottom:10px;font-size:0.98rem}
+.post-col li b{color:var(--accent)}
+.note-box{
+  border-left:3px solid var(--accent);background:var(--surface-sunken);
+  padding:12px 16px;border-radius:0 8px 8px 0;font-size:0.9rem;color:var(--muted);margin:0 0 14px;
+}
+.note-box b{color:var(--fg)}
+.ph-inline{margin:18px 0;height:180px}
+
+/* footer */
+footer{border-top:1px solid var(--border);padding:28px 0;margin-top:0}
+footer .wrap{display:flex;flex-direction:column;gap:4px}
+footer p{margin:0;font-size:0.8rem;color:var(--muted)}
+
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+
+<div id="app">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="#" id="logo-link">식탁<span>노트</span></a>
+      <nav class="cats" id="cat-nav" aria-label="카테고리">
+        <button data-cat="all" aria-current="true">전체글</button>
+        <button data-cat="kitchen">부엌꿀팁</button>
+        <button data-cat="gangwon">강원정보</button>
+        <button data-cat="read">읽을거리</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="view-list">
+    <div class="wrap">
+      <section class="hero">
+        <p class="tagline">매일 밥상에서 생기는 질문들에 답합니다.<br>
+        <strong>부엌에서 바로 쓰는 생활의 지혜</strong>부터 강원도 제철 식재료, 건강한 식생활 이야기까지.</p>
+      </section>
+      <section class="feed-grid" id="feed"></section>
+    </div>
+  </main>
+
+  <main id="view-post" hidden>
+    <div class="wrap post-col">
+      <button class="back-btn" id="back-btn">← 목록으로</button>
+      <div id="post-body"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>식탁노트 — 매일 밥상의 질문에 답하는 공간</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var posts = [
+    {
+      id:"tteok-soften",
+      cat:"kitchen", flag:true,
+      title:"딱딱해진 떡, 말랑하게 되돌리는 법",
+      summary:"찜기, 전자레인지, 끓는 물, 프라이팬까지 상황별로 떡을 되살리는 네 가지 방법.",
+      date:"2026.10.03", read:"3분",
+      body:[
+        {t:"summary", items:[
+          "찜기에 5분 찌면 가장 확실하게 말랑해집니다",
+          "전자레인지는 빠르지만 물을 꼭 뿌려야 떡이 굳지 않습니다",
+          "급할 땐 끓는 물에 10~20초 데치는 방법도 괜찮습니다"
+        ]},
+        {t:"canva", label:"캔바 — 4가지 방법 비교 카드"},
+        {t:"h", text:"방법 1. 찜기에 찌기 (가장 확실한 방법)"},
+        {t:"p", text:"김이 오른 찜기에 젖은 면포를 깔고 떡을 올려 5분 정도 찝니다. 표면이 마르지 않아 찐 직후가 가장 쫄깃합니다. 시간이 있다면 이 방법을 추천합니다."},
+        {t:"photo", label:"실사진 — 찜기에 면포 깔고 떡 올린 모습"},
+        {t:"h", text:"방법 2. 전자레인지 (가장 빠른 방법)"},
+        {t:"p", text:"떡 표면에 물을 한두 번 뿌리고 랩을 씌워 30초에서 1분 돌립니다. 물기 없이 돌리면 오히려 더 딱딱해지니 이 부분만 꼭 지켜주세요."},
+        {t:"h", text:"방법 3. 끓는 물에 데치기"},
+        {t:"p", text:"끓는 물에 10~20초 데쳤다가 바로 건집니다. 송편이나 절편처럼 작은 떡에 특히 잘 맞습니다."},
+        {t:"h", text:"방법 4. 프라이팬"},
+        {t:"p", text:"약불로 달군 팬에 물을 살짝 두르고 뚜껑을 덮어 데웁니다. 노릇하게 구워 먹고 싶을 때 좋은 방법입니다."},
+        {t:"h", text:"왜 떡이 딱딱해질까요"},
+        {t:"p", text:"떡은 시간이 지나며 수분이 빠지고 전분이 굳는 노화 현상을 겪습니다. 수분을 다시 채우고 따뜻한 온도를 주면 전분이 부드럽게 풀리면서 원래 질감으로 돌아옵니다."},
+        {t:"note", text:"너무 오래 찌거나 데우면 떡이 풀어질 수 있어요. 또 전자레인지는 물기 없이 돌리면 역효과가 나니 주의하세요."},
+        {t:"p", text:"떡이 딱딱해졌다고 바로 버리지 마시고, 상황에 맞는 방법으로 한 번 되살려보세요."}
+      ]
+    },
+    {id:"namul-bitter", cat:"kitchen", flag:false, title:"나물 쓴맛·아린맛 빼는 법", summary:"고사리부터 원추리까지, 나물별로 다른 손질법을 표로 정리했습니다.", date:"2026.10.05", read:"4분"},
+    {id:"kimchi-smell", cat:"kitchen", flag:false, title:"김치에서 군내가 날 때", summary:"살릴 수 있는 경우와 버려야 하는 경우, 골마지 구분법까지.", date:"2026.10.07", read:"3분"},
+    {id:"potato-sprout", cat:"kitchen", flag:false, title:"감자에 싹이 나면 먹어도 될까", summary:"초록빛 감자와 싹 난 부분, 어디까지 먹어도 안전한지.", date:"2026.10.09", read:"3분"},
+    {id:"frozen-mandu", cat:"kitchen", flag:false, title:"냉동 만두·떡 안 달라붙게 얼리는 법", summary:"펼쳐서 선냉동 후 지퍼백에 담는 순서만 기억하면 됩니다.", date:"2026.10.11", read:"2분"},
+    {id:"soon-gangwon", cat:"gangwon", flag:false, soon:true, title:"강원도 제철 식재료 이야기", summary:"작성 예정 — 원주·강원 지역 제철 식재료와 장터 소식을 담을 자리입니다.", date:"작성 예정", read:""},
+    {id:"soon-read", cat:"read", flag:false, soon:true, title:"음식에 담긴 이야기", summary:"작성 예정 — 음식 유래와 건강 상식 등 읽을거리를 담을 자리입니다.", date:"작성 예정", read:""}
+  ];
+
+  var feed = document.getElementById('feed');
+  var viewList = document.getElementById('view-list');
+  var viewPost = document.getElementById('view-post');
+  var postBody = document.getElementById('post-body');
+  var navBtns = document.querySelectorAll('nav.cats button');
+  var currentCat = 'all';
+
+  var catLabel = {kitchen:"부엌꿀팁", gangwon:"강원정보", read:"읽을거리"};
+
+  function renderFeed(){
+    feed.innerHTML = '';
+    var list = posts.filter(function(p){ return currentCat === 'all' || p.cat === currentCat; });
+    list.forEach(function(p){
+      var card = document.createElement('div');
+      card.className = 'card' + (p.soon ? ' soon' : '');
+      card.tabIndex = p.soon ? -1 : 0;
+      card.setAttribute('role','button');
+      var badges = '<span class="badge' + (p.flag ? ' flag' : '') + '">' + (p.flag ? '간판 · ' : '') + catLabel[p.cat] + '</span>';
+      if(p.soon) badges += '<span class="badge">준비중</span>';
+      card.innerHTML =
+        '<div class="ph ph-photo"><span>' + (p.soon ? '사진 자리' : '사진 자리') + '</span></div>' +
+        '<div class="badge-row">' + badges + '</div>' +
+        '<h3>' + p.title + '</h3>' +
+        '<p class="sum">' + p.summary + '</p>' +
+        '<div class="meta">' + p.date + (p.read ? ' · ' + p.read + ' 분량' : '') + '</div>';
+      if(!p.soon){
+        card.addEventListener('click', function(){ openPost(p.id); });
+        card.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openPost(p.id); } });
+      }
+      feed.appendChild(card);
+    });
+  }
+
+  function renderBlock(b){
+    if(b.t === 'summary'){
+      var html = '<div class="summary-box">';
+      b.items.forEach(function(i){ html += '<p>· ' + i + '</p>'; });
+      html += '</div>';
+      return html;
+    }
+    if(b.t === 'canva') return '<div class="ph ph-canva ph-inline"><span><b>캔바 자리</b> — ' + b.label.replace('캔바 — ','') + '</span></div>';
+    if(b.t === 'photo') return '<div class="ph ph-photo ph-inline" style="aspect-ratio:16/10"><span><b>사진 자리</b> — ' + b.label.replace('실사진 — ','') + '</span></div>';
+    if(b.t === 'h') return '<h2>' + b.text + '</h2>';
+    if(b.t === 'note') return '<div class="note-box"><b>주의할 점.</b> ' + b.text + '</div>';
+    return '<p>' + b.text + '</p>';
+  }
+
+  function openPost(id){
+    var p = posts.find(function(x){ return x.id === id; });
+    if(!p || !p.body) return;
+    var html = '<div class="badge-row"><span class="badge' + (p.flag ? ' flag' : '') + '">' + (p.flag ? '간판 · ' : '') + catLabel[p.cat] + '</span></div>' +
+      '<h1>' + p.title + '</h1>' +
+      '<div class="meta">' + p.date + ' · ' + p.read + ' 분량</div>';
+    p.body.forEach(function(b){ html += renderBlock(b); });
+    postBody.innerHTML = html;
+    viewList.hidden = true;
+    viewPost.hidden = false;
+    window.scrollTo(0,0);
+  }
+
+  function showList(){
+    viewPost.hidden = true;
+    viewList.hidden = false;
+  }
+
+  document.getElementById('back-btn').addEventListener('click', showList);
+  document.getElementById('logo-link').addEventListener('click', function(e){ e.preventDefault(); currentCat='all'; navBtns.forEach(function(b){b.setAttribute('aria-current', b.dataset.cat==='all');}); showList(); renderFeed(); });
+
+  navBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      currentCat = btn.dataset.cat;
+      navBtns.forEach(function(b){ b.setAttribute('aria-current', b === btn); });
+      showList();
+      renderFeed();
+    });
+  });
+
+  renderFeed();
+})();
+</script>
