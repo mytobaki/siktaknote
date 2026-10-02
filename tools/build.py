@@ -308,13 +308,13 @@ def build_post(post, posts):
     )
 
 
-def section_block(cat, posts, limit=6):
+def section_block(cat, posts, total, limit=6):
     shown = newest_first(posts)
     more = ""
-    if len(shown) > limit:
-        more = f'<a class="list-more" href="{cat["slug"]}.html">전체 {len(shown)}편 보기 →</a>'
+    if total > limit:
+        more = f'<a class="list-more" href="{cat["slug"]}.html">전체 {total}편 보기 →</a>'
     return f"""<section id="{cat['slug']}" class="list">
-  <div class="list-head"><h2>{e(cat['name'])}</h2><span>{len(posts)}편</span>{more}</div>
+  <div class="list-head"><h2>{e(cat['name'])}</h2><span>{total}편</span>{more}</div>
   <div class="grid">{"".join(post_card(p, 0) for p in shown[:limit])}</div>
 </section>"""
 
@@ -326,7 +326,8 @@ def build_index(posts):
     for cat in reversed(CATS):  # 새로 생긴 로컬 이야기를 먼저 보여준다
         items = [p for p in rest if p["category"] == cat["name"]]
         if items:
-            blocks.append(section_block(cat, items))
+            total = sum(1 for p in posts if p["category"] == cat["name"])
+            blocks.append(section_block(cat, items, total))
     body = f"""<main class="wrap">
 <section class="intro">
   <h1>{TAGLINE}</h1>
