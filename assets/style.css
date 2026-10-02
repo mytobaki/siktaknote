@@ -111,3 +111,24 @@ img{max-width:100%;height:auto;display:block}
 .foot-small{font-size:.76rem !important}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
 @media (prefers-reduced-motion: reduce){.post-card .thumb img{transition:none}}
+
+/* 로컬 이야기: 행사 정보 박스, 분류 칩, 목록 헤더 링크 */
+.info{border:1px solid var(--line);border-radius:12px;background:var(--soft);padding:18px 22px;margin:0 0 12px}
+.info h2{font-size:.82rem;letter-spacing:.06em;color:var(--accent);margin:0 0 10px}
+.info dl{margin:0;display:grid;gap:8px}
+.info dl>div{display:grid;grid-template-columns:5.2em minmax(0,1fr);gap:12px;font-size:.96rem;line-height:1.6}
+.info dt{color:var(--muted);font-weight:700;font-size:.86rem;padding-top:.1em}
+.info dd{margin:0}
+.info-links{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:14px 0 0}
+.info-links a{display:inline-block;font-size:.84rem;text-decoration:none;color:var(--accent);background:var(--bg);border:1px solid var(--line);padding:4px 12px;border-radius:999px}
+.info-links a:hover{border-color:var(--accent)}
+.info-note{font-size:.8rem;color:var(--muted);margin:12px 0 0;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px}
+.chips a{font-size:.9rem;text-decoration:none;padding:6px 14px;border-radius:999px;border:1px solid var(--line);color:var(--fg)}
+.chips a:hover{border-color:var(--accent);color:var(--accent)}
+.list-more{margin-left:auto;font-size:.88rem;color:var(--accent);text-decoration:none}
+.list-more:hover{text-decoration:underline}
+.feature{padding-bottom:12px}
+.intro .crumb{margin-bottom:14px}
+.list{scroll-margin-top:72px}
+@media (max-width:520px){.info dl>div{grid-template-columns:1fr;gap:2px}}

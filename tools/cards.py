@@ -7,6 +7,8 @@ assets/cards/<slug>-<id>.png (1200x675) 로 그린다.
   title   : title, sub
   steps   : title, steps[{head, note}]
   columns : title, cols[{head, value?, lines[], tone? (good|mid|bad)}]
+  timeline: title, items[{time, head, note?}]   (5줄 이하, 한 줄씩)
+로컬 이야기 글은 section·region 이 카드 상단 라벨에 들어간다.
 """
 import html
 import pathlib
@@ -86,13 +88,31 @@ h1.t{font-size:52px;margin-bottom:8px}
 .col.good li::before{background:var(--good)} .col.mid li::before{background:var(--mid)} .col.bad li::before{background:var(--bad)}
 """
 
+TIMELINE_CSS = """
+h1.t{font-size:52px;margin-bottom:8px}
+.stage{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:30px}
+.tl{display:flex;flex-direction:column;gap:12px}
+.tr{display:flex;align-items:center;gap:22px;background:var(--paper);border:2px solid var(--line);
+  border-radius:18px;padding:12px 26px 12px 14px}
+.tt{flex:none;min-width:176px;text-align:center;background:var(--accent);color:#fff;border-radius:12px;
+  font-family:var(--serif);font-weight:700;font-size:30px;padding:8px 14px}
+.tx{font-size:31px;font-weight:700;white-space:nowrap}
+.tn{font-size:26px;color:var(--muted);margin-left:10px;font-weight:400}
+"""
+
 e = html.escape
+
+
+def eyebrow_label(post):
+    if post.get("section"):
+        return " · ".join(x for x in [post["section"], post.get("region")] if x)
+    return post["category"]
 
 
 def frame(post, inner, css):
     return f"""<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <style>{BASE_CSS}{css}</style></head><body>
-<div class="top"><div class="mark">식탁<span>노트</span></div><div class="eyebrow">{e(post['category'])}</div></div>
+<div class="top"><div class="mark">식탁<span>노트</span></div><div class="eyebrow">{e(eyebrow_label(post))}</div></div>
 {inner}
 <div class="foot">siktaknote.com</div>
 </body></html>"""
@@ -107,7 +127,7 @@ def render_title(post, c):
 def render_steps(post, c):
     steps = c["steps"]
     n = len(steps)
-    hs, ns = (38, 28) if n <= 3 else (33, 25)
+    hs, ns = (38, 28) if n <= 3 else (33, 25) if n == 4 else (28, 22)
     parts = []
     for i, s in enumerate(steps, 1):
         parts.append(
@@ -116,8 +136,9 @@ def render_steps(post, c):
         )
         if i < n:
             parts.append('<div class="arrow">→</div>')
+    tight = ".step{padding:26px 16px 28px}.arrow{width:28px;font-size:28px}.num{width:54px;height:54px;font-size:28px}" if n >= 5 else ""
     inner = f'<h1 class="t">{e(c["title"])}</h1><div class="stage"><div class="row" style="--hs:{hs}px;--ns:{ns}px">{"".join(parts)}</div></div>'
-    return frame(post, inner, STEPS_CSS)
+    return frame(post, inner, STEPS_CSS + tight)
 
 
 def render_columns(post, c):
@@ -138,7 +159,18 @@ def render_columns(post, c):
     return frame(post, inner, COLS_CSS)
 
 
-RENDER = {"title": render_title, "steps": render_steps, "columns": render_columns}
+def render_timeline(post, c):
+    rows = []
+    for it in c["items"]:
+        note = f'<span class="tn">{e(it["note"])}</span>' if it.get("note") else ""
+        rows.append(f'<div class="tr"><div class="tt">{e(it["time"])}</div><div class="tx">{e(it["head"])}{note}</div></div>')
+    tight = (".tl{gap:8px}.tr{padding:7px 22px 7px 10px;border-radius:14px}.tt{font-size:25px;padding:5px 12px;min-width:150px}"
+             ".tx{font-size:28px}.tn{font-size:23px}") if len(c["items"]) >= 5 else ""
+    inner = f'<h1 class="t">{e(c["title"])}</h1><div class="stage"><div class="tl">{"".join(rows)}</div></div>'
+    return frame(post, inner, TIMELINE_CSS + tight)
+
+
+RENDER = {"title": render_title, "steps": render_steps, "columns": render_columns, "timeline": render_timeline}
 
 
 def card_alt(c):
@@ -148,6 +180,8 @@ def card_alt(c):
         bits.append(c.get("sub", ""))
     elif c["type"] == "steps":
         bits += [f'{i}. {s["head"]}' + (f' ({s["note"]})' if s.get("note") else "") for i, s in enumerate(c["steps"], 1)]
+    elif c["type"] == "timeline":
+        bits += [f'{it["time"]} {it["head"]}' + (f' ({it["note"]})' if it.get("note") else "") for it in c["items"]]
     else:
         for col in c["cols"]:
             seg = col["head"]
