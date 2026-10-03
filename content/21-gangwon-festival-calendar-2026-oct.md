@@ -33,6 +33,13 @@ info:
     - label: 원주 만두축제
       url: https://mandufestival.co.kr/
   checked: 2026-10-03
+photos:
+- id: photo-1716328435733-093551d38a1b
+  alt: 단풍이 물든 산과 나무, 바위가 어우러진 가을 설악산 풍경
+  credit: Austin Curtis
+- id: photo-1779805328640-67bb8bb0da8f
+  alt: 사람들로 붐비는 한국의 전통 시장 골목 풍경
+  credit: HONG KYU PARK
 cards:
   - id: hero
     type: title

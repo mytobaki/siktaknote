@@ -14,6 +14,13 @@ summary:
   - 옥수수는 사 온 날 바로 삶는 게 가장 맛있어요. 속껍질을 한두 겹 남기고 삶으면 향이 좋아요.
   - 삶은 옥수수는 식힌 뒤 한 개씩 랩에 싸서 냉동하면 한두 달 괜찮아요.
   - 먹을 때는 해동 후 찜기나 전자레인지로 데우세요.
+photos:
+- id: photo-1773287221816-ca479aded1ab
+  alt: 그릇에 담긴 삶은 옥수수와 감자
+  credit: David Trinks
+- id: photo-1634467524884-897d0af5e104
+  alt: 시장에 쌓여 있는 신선한 옥수수
+  credit: Wouter Supardi Salari
 cards:
   - id: compare
     type: columns

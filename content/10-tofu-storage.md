@@ -14,6 +14,10 @@ summary:
   - 남은 두부는 밀폐 용기에 담고 깨끗한 물을 잠기도록 부어 냉장하세요.
   - 물은 하루에 한 번 갈아주세요.
   - 오래 둘 거라면 물기를 빼고 썰어서 냉동하면 한 달 정도 괜찮아요.
+photos:
+- id: photo-1758293121435-396ed31ebcf4
+  alt: 송송 썬 파를 올린 김이 나는 따뜻한 두부 한 그릇
+  credit: Leongsan
 cards:
   - id: compare
     type: columns

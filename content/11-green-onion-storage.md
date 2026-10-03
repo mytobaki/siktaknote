@@ -14,6 +14,13 @@ summary:
   - 일주일 안에 쓸 대파는 씻지 말고 키친타월에 싸서 세워 냉장하세요.
   - 오래 두려면 씻어서 물기를 완전히 말린 뒤 썰어서 냉동하세요. 해동 없이 바로 쓰면 됩니다.
   - 미끈거리고 시큼한 냄새가 나면 그 부분은 잘라내고, 전체가 흐물하면 버리세요.
+photos:
+- id: photo-1768860382695-e79bdb937ba0
+  alt: 잘게 썰어 놓은 대파의 초록 부분과 흰 부분
+  credit: SarahCreates
+- id: photo-1602769515559-e15133a7e992
+  alt: 나무 테이블 위에 놓인 싱싱한 쪽파 한 단
+  credit: Christopher Previte
 cards:
   - id: compare
     type: columns

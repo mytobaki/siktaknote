@@ -31,6 +31,13 @@ info:
     - label: 공식 사이트
       url: https://yudeung.com/
   checked: 2026-10-03
+photos:
+- id: photo-1704545009784-6ab4eba0bb53
+  alt: 붉은 불빛이 이어진 빛의 터널을 걷는 사람들
+  credit: Lucas Schneider
+- id: photo-1771474799549-05a334453ff5
+  alt: 강가 언덕 위에 자리한 한국 전통 건축물
+  credit: Jonas Eriksson
 cards:
   - id: hero
     type: title

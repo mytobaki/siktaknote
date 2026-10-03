@@ -31,6 +31,13 @@ info:
     - label: 한국관광공사 안내
       url: https://korean.visitkorea.or.kr/kfes/detail/fstvlDetail.do?fstvlCntntsId=eff62395-e989-4993-b5ab-1b1808220401
   checked: 2026-10-03
+photos:
+- id: photo-1723528582975-5c6629c6356e
+  alt: 파도가 밀려오는 모래사장과 푸른 바다
+  credit: A.Y.
+- id: photo-1662533513021-f13cf8c7fd51
+  alt: 테이블과 의자, 커피 머신이 놓인 회색 톤의 카페 내부
+  credit: Photos of Korea
 cards:
   - id: hero
     type: title

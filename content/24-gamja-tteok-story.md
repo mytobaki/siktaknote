@@ -15,6 +15,13 @@ summary:
   - 감자떡은 감자를 갈아 건더기와 가라앉힌 전분을 합쳐 쪄낸 강원도 대표 향토 떡이에요.
   - 쌀이 귀한 산간 지역에서 감자로 만든 음식이라고 알려져 있어요.
   - 소로 강낭콩이나 팥을 쓰고, 지역에 따라 곁들이는 음식과 만드는 방식이 달라요.
+photos:
+- id: photo-1573196444577-af471298e034
+  alt: 수확해 흙이 묻은 채 쌓아 둔 감자 더미
+  credit: Markus Spiske
+- id: photo-1771965726816-d051ff206b83
+  alt: 구름 낀 하늘 아래 감자꽃이 핀 넓은 감자밭
+  credit: Moniek van Rosse
 cards:
   - id: hero
     type: title

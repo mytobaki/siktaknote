@@ -122,10 +122,31 @@ def render_body(post):
         return (f'\n<figure class="photo-fig"><img src="../assets/photos/{e(fname.strip())}" '
                 f'alt="{e(alt.strip())}" loading="lazy"></figure>\n')
 
+    # 무료 사진(front matter photos)은 둘째 소제목 앞부터 차례로 넣는다.
+    # [[photo: ...]] 자리는 대표님 실사진(`[[img:...]]`)을 위해 그대로 비워 둔다.
+    stock = list(post.get("photos", []))
+
+    def stock_fig(ph):
+        link = "https://unsplash.com/?utm_source=siktaknote&utm_medium=referral"
+        return (f'\n<figure class="photo-fig stock"><img src="{unsplash(ph["id"], 1280, 800)}" alt="{e(ph["alt"])}" '
+                f'width="1280" height="800" loading="lazy"><figcaption>사진: {e(ph["credit"])} / '
+                f'<a href="{link}" rel="noopener">Unsplash</a></figcaption></figure>\n')
+
+    def photo_slot(m):
+        return f"\n<!-- 사진 자리: {e(m.group(1).strip())} -->\n"
+
     body = post["body"]
     body = re.sub(r"\[\[card:([^\]]+)\]\]", card, body)
     body = re.sub(r"\[\[photo:([^\]]+)\]\]", photo_slot, body)
     body = re.sub(r"\[\[img:([^\]]+)\]\]", img, body)
+    if stock:
+        heads = [m.start() for m in re.finditer(r"(?m)^### ", body)]
+        inserts = []
+        for k, ph in enumerate(stock):
+            pos = heads[min(k + 1, len(heads) - 1)] if heads else len(body)
+            inserts.append((pos, stock_fig(ph)))
+        for pos, text in sorted(inserts, key=lambda t: t[0], reverse=True):
+            body = body[:pos] + text + "\n" + body[pos:]
     out = markdown.markdown(body, extensions=["tables", "sane_lists"])
     out = out.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
     return out

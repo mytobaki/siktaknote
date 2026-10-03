@@ -14,6 +14,13 @@ summary:
   - 탄 부분은 건드리지 말고 위쪽 멀쩡한 밥만 빨리 다른 그릇에 옮기세요.
   - 마른 식빵 한 조각을 밥 위에 올리고 5분 두면 냄새가 많이 빠집니다.
   - 그래도 남으면 밥을 넓게 펼쳐 김을 날려주세요.
+photos:
+- id: photo-1569641092045-f6ec23879aef
+  alt: 식탁 위에 놓인 흰색 밥솥
+  credit: J. Brouwer
+- id: photo-1743674452796-ad8d0cf38005
+  alt: 갓 지어 소복하게 쌓인 흰쌀밥
+  credit: Zoshua Colah
 cards:
   - id: steps
     type: steps

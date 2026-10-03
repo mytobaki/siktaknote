@@ -14,6 +14,13 @@ summary:
   - 생고구마는 냉장고에 넣지 말고 서늘한 실내에 두세요.
   - 신문지에 한 개씩 싸서 박스에 담고, 씻지 않은 채로 보관하세요.
   - 쓴맛이 나거나 검은 반점이 있는 부분이 많으면 먹지 말고 버리세요.
+photos:
+- id: photo-1520944052104-261c48c33a35
+  alt: 허브를 곁들여 구워 접시에 담아낸 군고구마
+  credit: Monika Grabkowska
+- id: photo-1613931507118-955a5f42e1c4
+  alt: 나무 테이블 위에 놓인 구운 고구마 조각의 주황빛 속살
+  credit: camila waz
 cards:
   - id: compare
     type: columns

@@ -14,6 +14,13 @@ summary:
   - 손질 전 키친타월로 표면 물기부터 닦아내세요.
   - 내장과 배 속 검은 막을 깨끗이 긁어내고 찬물에 빠르게 헹궈요.
   - 보관할 땐 물기를 완전히 닦고 한 번 먹을 만큼씩 랩으로 싸서 냉동하세요.
+photos:
+- id: photo-1567087978459-8a8eeac7bc75
+  alt: 스테인리스 싱크대에 놓인 싱싱한 고등어
+  credit: Ben Wicks
+- id: photo-1568727349390-7deb45c78797
+  alt: 상자에 가득 담긴 은빛 고등어
+  credit: Richard Bell
 cards:
   - id: steps
     type: steps

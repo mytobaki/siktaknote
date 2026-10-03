@@ -14,6 +14,13 @@ summary:
   - 밥이 한 김 식으면 1회분씩 납작하게 소분해 바로 냉동하세요.
   - 먹을 때는 해동하지 말고 랩을 씌워 전자레인지에 바로 데우세요.
   - 냉동밥은 한 달 안에 드시고, 밥을 실온에 2시간 넘게 두지 마세요.
+photos:
+- id: photo-1680137248876-6ad53db8caef
+  alt: 나무 식탁 위 흰 그릇에 담긴 갓 지은 밥
+  credit: Seiya Maeda
+- id: photo-1543352632-5a4b24e4d2a6
+  alt: 밥과 반찬을 나눠 담은 유리 밀프렙 용기들
+  credit: Ella Olsson
 cards:
   - id: steps
     type: steps

@@ -14,6 +14,13 @@ summary:
   - 쟁반에 간격을 두고 펼쳐 1~2시간 먼저 얼린 뒤, 그다음에 지퍼백에 모으세요.
   - 만두는 바닥에 전분을 살짝 묻히고, 떡은 기름을 아주 얇게 바르면 덜 붙습니다.
   - 이미 붙었다면 억지로 떼지 말고 덩어리째 찌면 저절로 떨어집니다.
+photos:
+- id: photo-1561916719-6cd8612e4be8
+  alt: 쟁반 위에 놓인 만두
+  credit: natsuki
+- id: photo-1742137745270-0929d2c548ab
+  alt: 조리 전 손으로 빚어 늘어놓은 생만두
+  credit: pure julia
 cards:
   - id: title
     type: title

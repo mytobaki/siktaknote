@@ -14,6 +14,13 @@ summary:
   - 끓는 물에 달걀을 넣어 삶고, 다 삶으면 바로 찬물에 식히세요.
   - 반숙은 6~7분, 완숙은 10~12분이 기준입니다.
   - 둥근 쪽부터 깨서 물속에서 까면 껍질이 깔끔하게 벗겨져요.
+photos:
+- id: photo-1680987398307-e1ae27a6ed67
+  alt: 쟁반 위에 놓인 삶은 달걀들
+  credit: Alexander Belov
+- id: photo-1586276424667-06c0b45b90ba
+  alt: 삶기 위해 검은 냄비에 담아 둔 하얀 달걀들
+  credit: Alexander Grey
 cards:
   - id: steps
     type: steps

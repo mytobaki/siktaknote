@@ -14,6 +14,13 @@ summary:
   - 썰기 전 냉장고에 30분, 급하면 냉동실에 10분 넣어두세요.
   - 잘 드는 칼로 썰면 눈물이 훨씬 덜 나요.
   - 환풍기를 켜거나 선풍기를 약하게 틀어두는 것도 도움이 됩니다.
+photos:
+- id: photo-1677751632736-f0e9800186d2
+  alt: 도마 위에 칼과 함께 놓인 썬 양파
+  credit: Marjukka Salminen
+- id: photo-1507633698035-8e4bd1573e09
+  alt: 여러 조각으로 썰어 놓은 붉은 양파
+  credit: Burhan Rexhepi
 cards:
   - id: tips
     type: columns

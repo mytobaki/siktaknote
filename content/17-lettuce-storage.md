@@ -14,6 +14,13 @@ summary:
   - 상추는 씻지 말고 키친타월을 깔아 밀폐 용기에 줄기 쪽을 아래로 세워 냉장하세요.
   - 이미 씻었다면 물기를 아주 꼼꼼히 털어 키친타월과 함께 보관하세요.
   - 시든 상추는 찬물에 10~20분 담가두면 다시 팽팽해져요.
+photos:
+- id: photo-1622205313162-be1d5712a43f
+  alt: 그릇에 담긴 싱싱한 초록 양상추
+  credit: Petr
+- id: photo-1692606280428-7df25e4daefb
+  alt: 물방울이 맺힌 싱싱한 상추 잎 클로즈업
+  credit: Nikolett Emmert
 cards:
   - id: steps
     type: steps

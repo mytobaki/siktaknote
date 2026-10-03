@@ -14,6 +14,10 @@ summary:
   - 통양배추는 심지를 도려내고 젖은 키친타월을 채워 비닐에 담아 냉장하세요.
   - 잘라 쓴 양배추는 단면에 랩을 밀착해 냉장하고, 1~2주 안에 드세요.
   - 곰팡이가 피었거나 속이 물러 즙이 나오면 버리세요.
+photos:
+- id: photo-1583116935756-f66cd999cdbe
+  alt: 흰 배경 위에 얇게 썬 양배추 단면
+  credit: Mockup Graphics
 cards:
   - id: steps
     type: steps

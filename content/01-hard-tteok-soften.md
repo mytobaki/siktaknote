@@ -14,6 +14,13 @@ summary:
   - 가장 확실한 방법은 찜기에 5~10분 찌는 것입니다.
   - 급할 땐 물을 살짝 묻혀 랩을 씌우고 전자레인지에 20~30초씩 나눠 돌리세요.
   - 다음부터는 냉장고 말고 냉동실에 넣어야 덜 굳습니다.
+photos:
+- id: photo-1759020480417-7da5ae8b861a
+  alt: 냄비 위에 겹쳐 올린 대나무 찜기
+  credit: Sean Thoman
+- id: photo-1747228469541-f0e7f56e7ec7
+  alt: 매콤한 소스에 끓는 가래떡 떡볶이
+  credit: lee seunghyub
 cards:
   - id: title
     type: title

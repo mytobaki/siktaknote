@@ -14,6 +14,13 @@ summary:
   - 쌀은 밀폐 용기에 담아 서늘하고 그늘진 곳에 두세요.
   - 기온이 오르는 여름철에는 냉장고 채소칸에 보관하면 쌀벌레를 막기 쉬워요.
   - 벌레가 생겼다면 냉동실에 며칠 두거나 펼쳐 말려서 골라내고, 심하면 버리세요.
+photos:
+- id: photo-1568347355280-d33fdf77d42a
+  alt: 용기에 담긴 쌀과 계량 스쿱
+  credit: Matt L
+- id: photo-1705147289789-6df2593f1b1e
+  alt: 유리 그릇에 가득 담긴 생쌀
+  credit: Mehmet Keskin
 cards:
   - id: place
     type: columns

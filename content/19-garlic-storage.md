@@ -14,6 +14,13 @@ summary:
   - 통마늘은 망에 담아 바람 통하는 서늘한 곳에, 깐마늘은 키친타월을 깔고 냉장하세요.
   - 다진마늘은 얇게 펴서 냉동하면 필요한 만큼 똑똑 떼어 쓸 수 있어요.
   - 마늘을 기름에 담가 실온에 두는 건 위험하니 꼭 냉장하세요.
+photos:
+- id: photo-1503097325940-ae094fdb97ba
+  alt: 껍질을 벗긴 마늘쪽과 마늘 알뿌리
+  credit: Mike Kenneally
+- id: photo-1646552807787-232dd42df025
+  alt: 푸른 망 자루에 가득 담긴 통마늘
+  credit: Charles Chen
 cards:
   - id: compare
     type: columns

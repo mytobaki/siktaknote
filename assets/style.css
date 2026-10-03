@@ -132,3 +132,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius
 .intro .crumb{margin-bottom:14px}
 .list{scroll-margin-top:72px}
 @media (max-width:520px){.info dl>div{grid-template-columns:1fr;gap:2px}}
+
+/* 본문 무료 사진 */
+.photo-fig.stock img{aspect-ratio:16/10;object-fit:cover;background:var(--sunken)}
+.photo-fig figcaption{font-size:.74rem;color:var(--muted);margin-top:6px;text-align:right}

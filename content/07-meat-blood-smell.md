@@ -14,6 +14,13 @@ summary:
   - 찬물에 30분~1시간 담가두면 핏물 대부분이 빠집니다.
   - 중간에 물을 2~3번 갈아주면 더 깨끗해져요.
   - 국·수육용은 끓는 물에 한 번 데쳐 첫 물을 버리면 잡내가 크게 줄어요.
+photos:
+- id: photo-1613454320437-0c228c8b1723
+  alt: 하얀 그릇에 담긴 손질 전의 생고기
+  credit: Eiliv Aceron
+- id: photo-1752555535777-0aed7bc93f98
+  alt: 접시에 가지런히 놓인 얇게 썬 생삼겹살
+  credit: Ari Kurniawan
 cards:
   - id: guide
     type: columns

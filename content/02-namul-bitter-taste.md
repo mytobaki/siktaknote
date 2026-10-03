@@ -14,6 +14,13 @@ summary:
   - 쓴맛은 대부분 물에 녹아 나옵니다. "데치고 → 찬물에 담가 우리기"가 기본입니다.
   - 데칠 때는 소금 한 꼬집, 뚜껑은 열고, 건진 뒤엔 바로 찬물에.
   - 고사리와 원추리는 맛 문제가 아니라 안전 문제이니 반드시 익혀 드세요.
+photos:
+- id: photo-1771573042838-8b3adf17562e
+  alt: 마늘과 함께 볶아 접시에 담은 푸른 채소 반찬
+  credit: Daily Food Shot
+- id: photo-1560100927-c32f29063ade
+  alt: 한식당에서 나온 여러 가지 채소 반찬 그릇
+  credit: Giselle Herrera
 cards:
   - id: title
     type: title
