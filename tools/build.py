@@ -36,17 +36,17 @@ from content import load_posts  # noqa: E402
 
 SITE = "https://siktaknote.com"
 SITE_NAME = "식탁노트"
-TAGLINE = "매일 밥상에서 생기는 질문에 답합니다"
+TAGLINE = "밥상 위의 작은 궁금증, 같이 풀어봐요"
 e = html.escape
 
 CATS = [
     {"name": "부엌 꿀팁", "slug": "kitchen",
      "title": "부엌 꿀팁",
-     "desc": "떡이 굳었을 때, 나물이 쓸 때, 김치에서 군내가 날 때. 부엌에서 막히는 순간마다 바로 쓸 수 있는 방법을 짧고 정확하게 정리합니다.",
+     "desc": "떡이 딱딱해졌을 때, 나물이 썼을 때, 김치에서 군내가 날 때. 부엌에서 막히는 순간마다 바로 따라 할 수 있는 방법을 쉽게 알려드려요.",
      "meta": "굳은 떡 살리기, 나물 쓴맛 빼기, 식재료 보관법처럼 부엌에서 바로 쓰는 생활의 지혜를 정리한 식탁노트 부엌 꿀팁 모음입니다."},
     {"name": "로컬 이야기", "slug": "local",
      "title": "로컬 이야기",
-     "desc": "밥상에서 시작해 지역으로 이어지는 이야기. 가볼 만한 축제와 당일 코스, 그 고장의 맛, 전해 내려오는 옛이야기를 담습니다. 강원도를 중심으로 전국 곳곳을 다룹니다.",
+     "desc": "밥상에서 시작해 지역으로 이어지는 이야기예요. 가볼 만한 축제와 당일 코스, 그 고장의 맛, 전해 내려오는 옛이야기를 모았어요. 강원도 이야기를 가장 많이 담고, 전국 곳곳으로도 놀러 가요.",
      "meta": "전국 축제 일정과 여행 코스, 지역의 향토 음식, 지방의 전설과 옛이야기를 정리한 식탁노트 로컬 이야기 모음입니다."},
 ]
 CAT_BY_NAME = {c["name"]: c for c in CATS}
@@ -199,7 +199,7 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 {body}
 <footer class="site-footer"><div class="wrap">
   <p class="foot-name">식탁<span>노트</span></p>
-  <p>{TAGLINE}. 부엌에서 바로 쓰는 생활의 지혜와, 밥상에서 시작해 지역으로 이어지는 이야기를 담습니다.</p>
+  <p>{TAGLINE}. 부엌에서 바로 써먹는 살림 꿀팁과, 밥상에서 시작해 지역으로 이어지는 이야기를 정성껏 담았어요.</p>
   <p class="foot-small">일부 사진은 <a href="https://unsplash.com/?utm_source=siktaknote&amp;utm_medium=referral" rel="noopener">Unsplash</a>의 무료 이미지를 사용합니다. 행사 일정과 요금은 바뀔 수 있으니 방문 전 공식 안내를 확인해 주세요.</p>
 </div></footer>
 </body>
@@ -352,7 +352,7 @@ def build_index(posts):
     body = f"""<main class="wrap">
 <section class="intro">
   <h1>{TAGLINE}</h1>
-  <p>부엌에서 막히는 순간의 해결법, 그리고 밥상에서 시작해 지역으로 이어지는 축제·맛·옛이야기를 짧고 정확하게 정리합니다.</p>
+  <p>떡이 딱딱해져서 막막했던 순간의 해결법부터, 밥상에서 시작해 우리 지역 곳곳으로 떠나는 축제 소식과 맛 이야기, 옛이야기까지 쉽고 따뜻하게 모았어요.</p>
 </section>
 <section class="feature">
   <div class="list-head"><h2>지금 읽을 글</h2></div>
