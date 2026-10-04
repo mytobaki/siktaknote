@@ -23,3 +23,6 @@
 - 행사 글은 `info:`(rows, links, checked)로 정보 박스를 넣고, 카드 `type: timeline`으로 타임테이블을 그린다.
 - 행사 일정은 공식 사이트나 한국관광공사에서 확인하고, 언론 보도로만 확인한 것은 글에 그렇게 밝힌다.
 - 홈 상단 큰 카드는 `featured: true`인 글(없으면 최신 글).
+
+### 대표 이미지에 사진 배경 (hero.bg)
+`hero: {card: hero, alt, bg: <Unsplash photo-id>, credit: 촬영자}` 로 쓰면 카드 PNG 대신 사진 위에 제목(`cards` 의 hero 카드 title/sub)을 얹어 보여줍니다. 사진은 Unsplash 에서 불러오며, 불러오지 못하면 초록 바탕 위에 제목만 남습니다. 공유 미리보기(og:image)에는 사진만 쓰입니다.

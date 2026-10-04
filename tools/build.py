@@ -69,12 +69,16 @@ def hero_src(post, w, h, pre=None):
     hero = post["hero"]
     if hero.get("id"):
         return unsplash(hero["id"], w, h)
+    if hero.get("bg"):
+        return unsplash(hero["bg"], w, h)
     path = f'assets/cards/{post["slug"]}-{hero["card"]}.png'
     return f"{SITE}/{path}" if pre is None else f"{pre}{path}"
 
 
 def og_image(post):
     hero = post["hero"]
+    if hero.get("bg"):
+        return unsplash(hero["bg"], 1200, 630)
     if hero.get("card"):
         return hero_src(post, 1200, 675)
     if post.get("cards"):
@@ -207,12 +211,39 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 """
 
 
+def photo_hero(post, w, h):
+    """사진 배경 위에 제목을 얹은 대표 이미지 (hero.bg 가 있는 글)."""
+    hero = post["hero"]
+    card = next(c for c in post["cards"] if c["id"] == hero["card"])
+    sub = f'<span>{e(card["sub"])}</span>' if card.get("sub") else ""
+    return (f'<div class="photo-hero" role="img" aria-label="{e(hero["alt"])}">'
+            f'<img src="{unsplash(hero["bg"], w, h)}" alt="" loading="lazy" width="{w}" height="{h}" onerror="this.remove()">'
+            f'<div class="ph-shade"></div>'
+            f'<div class="ph-top"><span class="ph-brand">식탁<b>노트</b></span><span class="ph-chip">{e(label_of(post))}</span></div>'
+            f'<div class="ph-text"><strong>{e(card["title"])}</strong>{sub}</div></div>')
+
+
+def hero_html(post, w, h, pre):
+    hero = post["hero"]
+    if hero.get("bg"):
+        return photo_hero(post, w, h)
+    return (f'<img src="{hero_src(post, w, h, pre)}" alt="{e(hero["alt"])}" '
+            f'width="{w}" height="{h}">')
+
+
 def credit(post):
     h = post["hero"]
-    if not h.get("id"):
+    if not (h.get("id") or h.get("bg")):
         return ""
     link = "https://unsplash.com/?utm_source=siktaknote&utm_medium=referral"
     return f'<figcaption>사진: {e(h["credit"])} / <a href="{link}" rel="noopener">Unsplash</a></figcaption>'
+
+
+def thumb_inner(p, w, h, pre):
+    if p["hero"].get("bg"):
+        return photo_hero(p, w, h)
+    return (f'<img src="{hero_src(p, w, h, pre)}" alt="{e(p["hero"]["alt"])}" '
+            f'loading="lazy" width="{w}" height="{h}">')
 
 
 def post_card(p, depth, big=False):
@@ -220,7 +251,7 @@ def post_card(p, depth, big=False):
     w, h = (1200, 675) if big else (720, 450)
     cls = "post-card big" if big else "post-card"
     return f"""<a class="{cls}" href="{pre}posts/{p['slug']}.html">
-  <div class="thumb"><img src="{hero_src(p, w, h, pre)}" alt="{e(p['hero']['alt'])}" loading="lazy" width="{w}" height="{h}"></div>
+  <div class="thumb">{thumb_inner(p, w, h, pre)}</div>
   <div class="pc-body">
     <span class="badge">{e(label_of(p))}</span>
     <h3>{e(p['title'])}</h3>
@@ -305,7 +336,7 @@ def build_post(post, posts):
   <span class="badge">{e(label_of(post))}</span>
   <h1>{e(post['title'])}</h1>
   <p class="meta">{date_html} · {mins}분이면 읽어요</p>
-  <figure class="hero"><img src="{hero_src(post, 1280, 720, '../')}" alt="{e(post['hero']['alt'])}" width="1280" height="720">{credit(post)}</figure>
+  <figure class="hero">{hero_html(post, 1280, 720, '../')}{credit(post)}</figure>
   <section class="summary" aria-label="3줄 요약"><h2>3줄 요약</h2><ul>{summary}</ul></section>
   {info_box(post)}
   <div class="prose">

@@ -136,3 +136,17 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius
 /* 본문 무료 사진 */
 .photo-fig.stock img{aspect-ratio:16/10;object-fit:cover;background:var(--sunken)}
 .photo-fig figcaption{font-size:.74rem;color:var(--muted);margin-top:6px;text-align:right}
+
+/* 사진 위에 제목을 얹은 대표 이미지 */
+.photo-hero{position:relative;container-type:inline-size;width:100%;height:100%;overflow:hidden;color:#fff;background:linear-gradient(135deg,#3c5b45,#22332a);aspect-ratio:16/9}
+.photo-hero img{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border-radius:0}
+.ph-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(24,20,12,.8) 0%,rgba(24,20,12,.38) 48%,rgba(24,20,12,.12) 100%)}
+.ph-top{position:absolute;left:5cqw;right:5cqw;top:4.5cqw;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ph-brand{font-family:var(--serif);font-weight:800;font-size:13px;font-size:max(12px,3.4cqw);letter-spacing:.01em;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.ph-brand b{color:#c4e6cd}
+.ph-chip{font-size:11px;font-size:max(10px,2.9cqw);font-weight:700;background:rgba(255,255,255,.9);color:#2f4a38;padding:.5cqw 2.4cqw;border-radius:99px;white-space:nowrap}
+.ph-text{position:absolute;left:5cqw;right:5cqw;bottom:5cqw}
+.ph-text strong{display:block;font-family:var(--serif);font-weight:800;font-size:20px;font-size:max(17px,6.4cqw);line-height:1.22;text-shadow:0 2px 10px rgba(0,0,0,.5);text-wrap:balance}
+.ph-text span{display:block;margin-top:1.4cqw;font-size:12px;font-size:max(11px,3.3cqw);opacity:.95;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.hero .photo-hero{aspect-ratio:16/9;border-radius:12px}
+.post-card.big .photo-hero{aspect-ratio:auto}
