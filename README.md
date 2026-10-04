@@ -26,3 +26,11 @@
 
 ### 대표 이미지에 사진 배경 (hero.bg)
 `hero: {card: hero, alt, bg: <Unsplash photo-id>, credit: 촬영자}` 로 쓰면 카드 PNG 대신 사진 위에 제목(`cards` 의 hero 카드 title/sub)을 얹어 보여줍니다. 사진은 Unsplash 에서 불러오며, 불러오지 못하면 초록 바탕 위에 제목만 남습니다. 공유 미리보기(og:image)에는 사진만 쓰입니다.
+
+## 애드센스 (tools/site.json)
+
+애드센스 가입 후 게시자 ID를 `tools/site.json` 에 넣고 `python3 tools/build.py` 를 실행하면 모든 페이지 head 에 애드센스 코드와 `google-adsense-account` 메타태그가 들어가고, 루트에 `ads.txt` 가 만들어진다.
+
+    {"adsense_client": "ca-pub-1234567890123456"}
+
+비워 두면(기본) 광고 코드와 ads.txt 는 만들어지지 않는다. 소개·개인정보처리방침·문의 페이지 문구는 `tools/build.py` 의 ABOUT / PRIVACY / CONTACT 에 있고, 문의 이메일은 `CONTACT_EMAIL` 한 곳에서 바꾼다.

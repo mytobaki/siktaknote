@@ -37,7 +37,20 @@ from content import load_posts  # noqa: E402
 SITE = "https://siktaknote.com"
 SITE_NAME = "식탁노트"
 TAGLINE = "밥상 위의 작은 궁금증, 같이 풀어봐요"
+OPERATOR = "김성호"
+CONTACT_EMAIL = "tobaki@mytobaki.com"
+POLICY_DATE = "2026-10-04"
 e = html.escape
+
+
+def adsense_client():
+    """tools/site.json 의 adsense_client (예: ca-pub-1234567890123456). 비어 있으면 광고 코드를 넣지 않는다."""
+    try:
+        cfg = json.loads((ROOT / "tools" / "site.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return ""
+    cid = str(cfg.get("adsense_client", "")).strip()
+    return cid if re.fullmatch(r"ca-pub-\d{10,20}", cid) else ""
 
 CATS = [
     {"name": "부엌 꿀팁", "slug": "kitchen",
@@ -183,6 +196,10 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
         meta.append(f'<meta name="keywords" content="{e(", ".join(keywords))}">')
     if jsonld:
         meta.append(f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>')
+    ads = adsense_client()
+    if ads:
+        meta.append(f'<meta name="google-adsense-account" content="{ads}">')
+        meta.append(f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ads}" crossorigin="anonymous"></script>')
     nav = "".join(f'<a href="{pre}{c["slug"]}.html">{e(c["name"])}</a>' for c in CATS)
     return f"""<!doctype html>
 <html lang="ko">
@@ -204,6 +221,7 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 <footer class="site-footer"><div class="wrap">
   <p class="foot-name">식탁<span>노트</span></p>
   <p>{TAGLINE}. 부엌에서 바로 써먹는 살림 꿀팁과, 밥상에서 시작해 지역으로 이어지는 이야기를 정성껏 담았어요.</p>
+  <p class="foot-links"><a href="{pre}about.html">식탁노트 소개</a><a href="{pre}privacy.html">개인정보처리방침</a><a href="{pre}contact.html">문의</a></p>
   <p class="foot-small">일부 사진은 <a href="https://unsplash.com/?utm_source=siktaknote&amp;utm_medium=referral" rel="noopener">Unsplash</a>의 무료 이미지를 사용합니다. 행사 일정과 요금은 바뀔 수 있으니 방문 전 공식 안내를 확인해 주세요.</p>
 </div></footer>
 </body>
@@ -441,6 +459,104 @@ def build_category(cat, posts):
     )
 
 
+def build_static(slug, title, description, h1, inner):
+    url = f"{SITE}/{slug}.html"
+    body = f"""<main class="wrap article-wrap">
+<article class="article">
+  <p class="crumb"><a href="index.html">홈</a> › {e(h1)}</p>
+  <h1>{e(h1)}</h1>
+  <div class="prose">
+{inner}
+  </div>
+</article>
+</main>"""
+    return page(title=f"{title} | {SITE_NAME}", description=description, canonical=url, body=body, depth=0)
+
+
+ABOUT = f"""
+<p>안녕하세요, 식탁노트예요. 밥상 위에서 생기는 작은 궁금증을 같이 풀어 보려고 만든 사이트랍니다. 굳어 버린 떡은 어떻게 살리지, 사 온 무는 어떻게 두어야 끝까지 쓸 수 있지, 이번 주말 축제는 언제 어떻게 가면 편할까. 이런 질문에 차근차근 답해 드리는 게 목표예요.</p>
+
+<h3>두 개의 코너가 있어요</h3>
+<p><strong>부엌 꿀팁</strong>에서는 냄새 잡기, 식재료 보관, 손질처럼 부엌에서 바로 써먹는 방법을 정리해요. 왜 그렇게 하면 되는지도 함께 적어서, 상황이 조금 달라져도 응용할 수 있게 하려고 해요.</p>
+<p><strong>로컬 이야기</strong>에서는 밥상에서 시작해 지역으로 이어지는 이야기를 다뤄요. 가 볼 만한 축제와 하루 코스, 그 고장의 향토 음식, 전해 내려오는 옛이야기를 모아요. 강원도 이야기를 가장 많이 담고, 전국 곳곳으로도 놀러 갑니다.</p>
+
+<h3>글은 이렇게 만들어요</h3>
+<p>글은 AI 도구의 도움을 받아 초안을 쓰고, 운영자가 내용을 확인한 뒤에 올려요. 축제 일정이나 옛이야기처럼 사실 확인이 필요한 글은 공식 사이트, 한국관광공사, 한국민족문화대백과사전 같은 공개된 자료를 바탕으로 하고, 확인하지 못한 부분은 확인하지 못했다고 그대로 적어요. 행사 정보에는 확인한 날짜를 함께 밝히고, 바뀐 내용이 있으면 고쳐 써요.</p>
+<p>부엌 꿀팁은 널리 알려진 생활 지식을 정리한 것이라, 식품 안전이나 건강에 관한 전문적인 조언은 아니에요. 몸 상태나 식재료 상태가 걱정될 때는 전문가의 안내를 따라 주세요.</p>
+
+<h3>잘못된 내용을 발견하셨나요</h3>
+<p>틀린 정보나 바뀐 일정을 알려 주시면 확인해서 바로잡을게요. <a href="contact.html">문의 페이지</a>에서 연락 방법을 확인해 주세요.</p>
+
+<h3>사진과 광고</h3>
+<p>글에 쓰인 사진 가운데 일부는 <a href="https://unsplash.com/?utm_source=siktaknote&amp;utm_medium=referral" rel="noopener">Unsplash</a>의 무료 이미지이고, 사진을 찍은 분의 이름을 글마다 밝혀 두었어요. 앞으로 이 사이트에는 구글 애드센스 같은 광고가 게재될 수 있어요. 광고가 붙더라도 글의 내용은 광고와 관계없이 쓰고, 광고 관련 안내는 <a href="privacy.html">개인정보처리방침</a>에 적어 두었어요.</p>
+
+<h3>운영자</h3>
+<p>식탁노트는 {OPERATOR}가 운영해요.</p>
+"""
+
+PRIVACY = f"""
+<p>식탁노트(siktaknote.com, 이하 "사이트")는 방문해 주시는 분들의 개인정보를 소중하게 다뤄요. 이 방침은 사이트에서 어떤 정보가 쓰이는지, 광고와 쿠키는 어떻게 다뤄지는지 알려 드리기 위한 글이에요.</p>
+
+<h3>1. 직접 수집하는 개인정보</h3>
+<p>사이트에는 회원가입, 댓글, 구독 신청처럼 개인정보를 입력받는 기능이 없고, 방문자의 개인정보를 직접 수집하거나 저장하지 않아요. 문의 메일을 보내 주시면 보내신 분의 이메일 주소와 내용을 확인할 수 있는데, 이 정보는 답변을 드리는 데에만 쓰고 처리가 끝나면 지체 없이 파기해요.</p>
+
+<h3>2. 접속 기록</h3>
+<p>사이트는 GitHub Pages를 통해 제공돼요. 사이트에 접속하면 호스팅 업체인 GitHub의 서버에 접속 기록(IP 주소, 브라우저 종류, 접속 시간 등)이 남을 수 있어요. 이 기록은 해당 업체의 정책에 따라 관리되고, 식탁노트가 따로 내려받아 보관하지 않아요.</p>
+
+<h3>3. 광고와 쿠키</h3>
+<p>사이트에는 구글 애드센스를 비롯한 광고가 게재될 수 있어요. 광고가 게재될 때는 다음과 같이 운영돼요.</p>
+<ul>
+<li>Google을 비롯한 제3자 광고 공급업체는 쿠키를 사용해, 이용자가 이 사이트나 다른 웹사이트를 이전에 방문한 기록을 바탕으로 광고를 게재해요.</li>
+<li>Google은 광고 쿠키를 사용해 Google과 파트너가 이 사이트와 인터넷상의 다른 사이트 방문 기록을 바탕으로 이용자에게 광고를 게재할 수 있어요.</li>
+<li>이용자는 <a href="https://adssettings.google.com" rel="noopener">Google 광고 설정</a>에서 맞춤 광고를 끌 수 있어요. 다른 광고 공급업체의 맞춤 광고는 <a href="https://www.aboutads.info" rel="noopener">www.aboutads.info</a>에서 선택을 해제할 수 있어요.</li>
+<li>Google의 광고 관련 정책은 <a href="https://policies.google.com/technologies/ads?hl=ko" rel="noopener">Google 광고 기술 정책</a>에서 볼 수 있어요.</li>
+<li>사용 중인 브라우저의 설정에서 쿠키를 차단하거나 삭제할 수도 있어요. 다만 일부 기능이 제대로 동작하지 않을 수 있어요.</li>
+</ul>
+
+<h3>4. 외부 서비스</h3>
+<p>사이트는 글꼴(Google Fonts)과 일부 사진(Unsplash)을 해당 서비스의 서버에서 불러와요. 이때 방문자의 IP 주소와 브라우저 정보가 해당 서비스에 전달될 수 있어요. 글 안에 있는 공식 사이트 등 외부 링크로 이동하면 그 사이트의 개인정보 방침이 적용돼요.</p>
+
+<h3>5. 방문 통계</h3>
+<p>현재는 방문자 통계 도구를 쓰지 않아요. 앞으로 도입하게 되면 이 방침에 쓰는 도구와 목적을 먼저 적어 둘게요.</p>
+
+<h3>6. 어린이의 개인정보</h3>
+<p>사이트는 만 14세 미만 어린이의 개인정보를 수집하지 않아요.</p>
+
+<h3>7. 문의</h3>
+<p>개인정보와 관련해 궁금한 점은 {OPERATOR}에게 이메일(<a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>)로 알려 주세요.</p>
+
+<h3>8. 방침이 바뀔 때</h3>
+<p>이 방침의 내용이 바뀌면 이 페이지에 새로 적고 날짜를 고칠게요.</p>
+<p>시행일: {POLICY_DATE.replace("-", ".")}</p>
+"""
+
+CONTACT = f"""
+<p>식탁노트에 궁금한 점이나 하고 싶은 말씀이 있으면 편하게 메일을 보내 주세요.</p>
+
+<h3>이메일</h3>
+<p><a href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a></p>
+<p>운영자: {OPERATOR}</p>
+
+<h3>이런 내용을 보내 주세요</h3>
+<ul>
+<li>글에서 틀린 정보나 바뀐 일정을 발견했을 때</li>
+<li>다뤄 줬으면 하는 부엌 고민이나 지역 이야기가 있을 때</li>
+<li>글이나 사진의 저작권과 관련해 알리실 내용이 있을 때</li>
+<li>그 밖에 사이트에 대한 의견</li>
+</ul>
+
+<h3>답변은 이렇게 드려요</h3>
+<p>보내 주신 메일은 순서대로 확인하고, 보통 며칠 안에 답장을 드려요. 틀린 정보를 알려 주시면 확인한 뒤 글을 고치고, 글 아래의 수정한 날짜에 반영해요.</p>
+<p>개인정보 처리에 관해서는 <a href="privacy.html">개인정보처리방침</a>을 참고해 주세요.</p>
+"""
+
+STATIC_PAGES = [
+    ("about", "식탁노트 소개", "식탁노트는 부엌 꿀팁과 지역 이야기를 쉽고 따뜻하게 풀어 쓰는 사이트예요. 어떤 사이트인지, 글을 어떻게 만드는지 소개해요.", "식탁노트 소개", ABOUT),
+    ("privacy", "개인정보처리방침", "식탁노트의 개인정보처리방침이에요. 수집하는 정보, 광고와 쿠키, 외부 서비스 이용에 관한 안내를 담았어요.", "개인정보처리방침", PRIVACY),
+    ("contact", "문의", "식탁노트에 궁금한 점이나 정정 제보, 의견이 있을 때 연락하는 방법을 안내해요.", "문의", CONTACT),
+]
+
+
 def build_sitemap(posts):
     urls = [(f"{SITE}/", max(p.get("updated", p["date"]) for p in posts))]
     for cat in CATS:
@@ -448,6 +564,7 @@ def build_sitemap(posts):
         if sub:
             urls.append((f"{SITE}/{cat['slug']}.html", max(p.get("updated", p["date"]) for p in sub)))
     urls += [(f"{SITE}/posts/{p['slug']}.html", p.get("updated", p["date"])) for p in posts]
+    urls += [(f"{SITE}/{slug}.html", POLICY_DATE) for slug, *_ in STATIC_PAGES]
     rows = "".join(f"<url><loc>{u}</loc><lastmod>{d}</lastmod></url>" for u, d in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{rows}</urlset>\n'
 
@@ -468,6 +585,14 @@ def main():
     for cat in CATS:
         if any(p["category"] == cat["name"] for p in posts):
             (ROOT / f"{cat['slug']}.html").write_text(build_category(cat, posts), encoding="utf-8")
+    for slug, title, desc, h1, inner in STATIC_PAGES:
+        (ROOT / f"{slug}.html").write_text(build_static(slug, title, desc, h1, inner), encoding="utf-8")
+    ads = adsense_client()
+    ads_txt = ROOT / "ads.txt"
+    if ads:
+        ads_txt.write_text(f"google.com, {ads.replace('ca-', '')}, DIRECT, f08c47fec0942fa0\n", encoding="utf-8")
+    elif ads_txt.exists():
+        ads_txt.unlink()
     (ROOT / "sitemap.xml").write_text(build_sitemap(posts), encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
     print("index, categories, sitemap, robots")

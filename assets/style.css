@@ -150,3 +150,7 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius
 .ph-text span{display:block;margin-top:1.4cqw;font-size:12px;font-size:max(11px,3.3cqw);opacity:.95;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 .hero .photo-hero{aspect-ratio:16/9;border-radius:12px}
 .post-card.big .photo-hero{aspect-ratio:auto}
+
+.site-footer .foot-links{margin:10px 0 12px}
+.site-footer .foot-links a{margin-right:16px;font-size:.84rem;font-weight:500;color:var(--fg);text-decoration:none}
+.site-footer .foot-links a:hover{color:var(--accent);text-decoration:underline}
