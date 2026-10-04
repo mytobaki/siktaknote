@@ -34,3 +34,10 @@
     {"adsense_client": "ca-pub-1234567890123456"}
 
 비워 두면(기본) 광고 코드와 ads.txt 는 만들어지지 않는다. 소개·개인정보처리방침·문의 페이지 문구는 `tools/build.py` 의 ABOUT / PRIVACY / CONTACT 에 있고, 문의 이메일은 `CONTACT_EMAIL` 한 곳에서 바꾼다.
+
+## 검색 등록 (tools/site.json)
+
+- `google_site_verification`: 구글 서치 콘솔 "HTML 태그" 방식의 content 값 → 모든 페이지에 `google-site-verification` 메타태그
+- `naver_site_verification`: 네이버 서치어드바이저 "HTML 태그" 방식의 content 값 → `naver-site-verification` 메타태그
+- 빌드하면 `sitemap.xml`(글의 `updated` 날짜를 lastmod로 사용)과 `rss.xml`(네이버 RSS 제출용)이 함께 만들어진다.
+- 글 내용을 크게 고치면 front matter에 `updated: YYYY-MM-DD` 를 적는다 (글 상단 "수정" 날짜, 구조화 데이터 dateModified, sitemap 에 반영).

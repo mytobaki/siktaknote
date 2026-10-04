@@ -43,22 +43,29 @@ POLICY_DATE = "2026-10-04"
 e = html.escape
 
 
-def adsense_client():
-    """tools/site.json 의 adsense_client (예: ca-pub-1234567890123456). 비어 있으면 광고 코드를 넣지 않는다."""
+def site_cfg(key):
+    """tools/site.json 의 설정값 (없으면 빈 문자열)."""
     try:
         cfg = json.loads((ROOT / "tools" / "site.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return ""
-    cid = str(cfg.get("adsense_client", "")).strip()
+    return str(cfg.get(key, "")).strip()
+
+
+def adsense_client():
+    """tools/site.json 의 adsense_client (예: ca-pub-1234567890123456). 비어 있으면 광고 코드를 넣지 않는다."""
+    cid = site_cfg("adsense_client")
     return cid if re.fullmatch(r"ca-pub-\d{10,20}", cid) else ""
 
 CATS = [
     {"name": "부엌 꿀팁", "slug": "kitchen",
      "title": "부엌 꿀팁",
+     "seo_title": "부엌 꿀팁 — 식재료 보관법, 냄새 잡는 법, 손질 요령 모음",
      "desc": "떡이 딱딱해졌을 때, 나물이 썼을 때, 김치에서 군내가 날 때. 부엌에서 막히는 순간마다 바로 따라 할 수 있는 방법을 쉽게 알려드려요.",
      "meta": "굳은 떡 살리기, 나물 쓴맛 빼기, 식재료 보관법처럼 부엌에서 바로 쓰는 생활의 지혜를 정리한 식탁노트 부엌 꿀팁 모음입니다."},
     {"name": "로컬 이야기", "slug": "local",
      "title": "로컬 이야기",
+     "seo_title": "로컬 이야기 — 축제 일정과 여행 코스, 향토 음식, 지역 옛이야기",
      "desc": "밥상에서 시작해 지역으로 이어지는 이야기예요. 가볼 만한 축제와 당일 코스, 그 고장의 맛, 전해 내려오는 옛이야기를 모았어요. 강원도 이야기를 가장 많이 담고, 전국 곳곳으로도 놀러 가요.",
      "meta": "전국 축제 일정과 여행 코스, 지역의 향토 음식, 지방의 전설과 옛이야기를 정리한 식탁노트 로컬 이야기 모음입니다."},
 ]
@@ -189,12 +196,20 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
         f'<meta property="og:url" content="{canonical}">',
         '<meta property="og:locale" content="ko_KR">',
         '<meta name="twitter:card" content="summary_large_image">',
+        '<meta name="robots" content="index, follow, max-image-preview:large">',
+        f'<link rel="alternate" type="application/rss+xml" title="{SITE_NAME}" href="{SITE}/rss.xml">',
     ]
+    for key, name in (("google_site_verification", "google-site-verification"),
+                      ("naver_site_verification", "naver-site-verification")):
+        if site_cfg(key):
+            meta.append(f'<meta name="{name}" content="{e(site_cfg(key))}">')
     if og_image:
         meta.append(f'<meta property="og:image" content="{og_image}">')
     if keywords:
         meta.append(f'<meta name="keywords" content="{e(", ".join(keywords))}">')
     if jsonld:
+        if isinstance(jsonld, list):
+            jsonld = {"@context": "https://schema.org", "@graph": jsonld}
         meta.append(f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>')
     ads = adsense_client()
     if ads:
@@ -229,13 +244,14 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 """
 
 
-def photo_hero(post, w, h):
+def photo_hero(post, w, h, lazy=True):
     """사진 배경 위에 제목을 얹은 대표 이미지 (hero.bg 가 있는 글)."""
     hero = post["hero"]
     card = next(c for c in post["cards"] if c["id"] == hero["card"])
     sub = f'<span>{e(card["sub"])}</span>' if card.get("sub") else ""
+    load = ' loading="lazy"' if lazy else ' fetchpriority="high"'
     return (f'<div class="photo-hero" role="img" aria-label="{e(hero["alt"])}">'
-            f'<img src="{unsplash(hero["bg"], w, h)}" alt="" loading="lazy" width="{w}" height="{h}" onerror="this.remove()">'
+            f'<img src="{unsplash(hero["bg"], w, h)}" alt=""{load} width="{w}" height="{h}" onerror="this.remove()">'
             f'<div class="ph-shade"></div>'
             f'<div class="ph-top"><span class="ph-brand">식탁<b>노트</b></span><span class="ph-chip">{e(label_of(post))}</span></div>'
             f'<div class="ph-text"><strong>{e(card["title"])}</strong>{sub}</div></div>')
@@ -244,9 +260,9 @@ def photo_hero(post, w, h):
 def hero_html(post, w, h, pre):
     hero = post["hero"]
     if hero.get("bg"):
-        return photo_hero(post, w, h)
+        return photo_hero(post, w, h, lazy=False)
     return (f'<img src="{hero_src(post, w, h, pre)}" alt="{e(hero["alt"])}" '
-            f'width="{w}" height="{h}">')
+            f'width="{w}" height="{h}" fetchpriority="high">')
 
 
 def credit(post):
@@ -257,11 +273,12 @@ def credit(post):
     return f'<figcaption>사진: {e(h["credit"])} / <a href="{link}" rel="noopener">Unsplash</a></figcaption>'
 
 
-def thumb_inner(p, w, h, pre):
+def thumb_inner(p, w, h, pre, lazy=True):
     if p["hero"].get("bg"):
-        return photo_hero(p, w, h)
+        return photo_hero(p, w, h, lazy)
+    load = 'loading="lazy"' if lazy else 'fetchpriority="high"'
     return (f'<img src="{hero_src(p, w, h, pre)}" alt="{e(p["hero"]["alt"])}" '
-            f'loading="lazy" width="{w}" height="{h}">')
+            f'{load} width="{w}" height="{h}">')
 
 
 def post_card(p, depth, big=False):
@@ -269,7 +286,7 @@ def post_card(p, depth, big=False):
     w, h = (1200, 675) if big else (720, 450)
     cls = "post-card big" if big else "post-card"
     return f"""<a class="{cls}" href="{pre}posts/{p['slug']}.html">
-  <div class="thumb">{thumb_inner(p, w, h, pre)}</div>
+  <div class="thumb">{thumb_inner(p, w, h, pre, lazy=not big)}</div>
   <div class="pc-body">
     <span class="badge">{e(label_of(p))}</span>
     <h3>{e(p['title'])}</h3>
@@ -326,20 +343,28 @@ def build_post(post, posts):
     if hero_url not in images:
         images.append(hero_url)
     jsonld = {
-        "@context": "https://schema.org",
         "@type": "Article",
         "headline": post["title"],
         "description": post["description"],
         "datePublished": post["date"],
         "dateModified": post.get("updated", post["date"]),
         "image": images,
-        "author": {"@type": "Organization", "name": SITE_NAME, "url": SITE},
+        "author": {"@type": "Organization", "name": SITE_NAME, "url": f"{SITE}/about.html"},
         "publisher": {"@type": "Organization", "name": SITE_NAME, "url": SITE},
         "mainEntityOfPage": url,
         "keywords": ", ".join(post.get("keywords", [])),
         "inLanguage": "ko",
     }
 
+    jsonld["articleSection"] = cat["name"]
+    jsonld = [jsonld, {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "홈", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": cat["name"], "item": f"{SITE}/{cat['slug']}.html"},
+            {"@type": "ListItem", "position": 3, "name": post["title"], "item": url},
+        ],
+    }]
     crumb = f'<a href="../index.html">홈</a> › <a href="../{cat["slug"]}.html">{e(cat["name"])}</a>'
     if post.get("section"):
         crumb += f' › <a href="../{cat["slug"]}.html#{e(post["section"])}">{e(post["section"])}</a>'
@@ -409,7 +434,13 @@ def build_index(posts):
 </section>
 {"".join(blocks)}
 </main>"""
-    jsonld = {"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME, "url": SITE, "inLanguage": "ko"}
+    jsonld = [
+        {"@type": "WebSite", "@id": f"{SITE}/#website", "name": SITE_NAME, "alternateName": "siktaknote",
+         "url": f"{SITE}/", "inLanguage": "ko", "description": TAGLINE,
+         "publisher": {"@id": f"{SITE}/#org"}},
+        {"@type": "Organization", "@id": f"{SITE}/#org", "name": SITE_NAME, "url": f"{SITE}/",
+         "email": CONTACT_EMAIL},
+    ]
     return page(
         title=f"{SITE_NAME} — {TAGLINE}",
         description="굳은 떡 살리기, 나물 쓴맛 빼기 같은 부엌 꿀팁과 전국 축제 코스, 향토 음식, 지방의 옛이야기를 정리하는 식탁노트입니다.",
@@ -446,10 +477,18 @@ def build_category(cat, posts):
 </section>
 {inner}
 </main>"""
-    jsonld = {"@context": "https://schema.org", "@type": "CollectionPage", "name": f"{cat['name']} | {SITE_NAME}",
-              "url": f"{SITE}/{cat['slug']}.html", "inLanguage": "ko"}
+    jsonld = [
+        {"@type": "CollectionPage", "name": f"{cat['name']} | {SITE_NAME}", "url": f"{SITE}/{cat['slug']}.html",
+         "inLanguage": "ko", "description": cat["meta"],
+         "mainEntity": {"@type": "ItemList", "itemListElement": [
+             {"@type": "ListItem", "position": i + 1, "url": f"{SITE}/posts/{p['slug']}.html", "name": p["title"]}
+             for i, p in enumerate(items)]}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "홈", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": cat["name"], "item": f"{SITE}/{cat['slug']}.html"}]},
+    ]
     return page(
-        title=f"{cat['name']} | {SITE_NAME}",
+        title=f"{cat['seo_title']} | {SITE_NAME}",
         description=cat["meta"],
         canonical=f"{SITE}/{cat['slug']}.html",
         body=body,
@@ -569,6 +608,28 @@ def build_sitemap(posts):
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{rows}</urlset>\n'
 
 
+def build_rss(posts):
+    from email.utils import format_datetime
+    from datetime import datetime, timezone, timedelta
+    kst = timezone(timedelta(hours=9))
+
+    def rfc(d):
+        return format_datetime(datetime.fromisoformat(str(d)).replace(hour=9, tzinfo=kst))
+
+    items = []
+    for p in sorted(posts, key=lambda p: (p.get("updated", p["date"]), p["order"]), reverse=True):
+        url = f"{SITE}/posts/{p['slug']}.html"
+        items.append(
+            f"<item><title>{e(p['title'])}</title><link>{url}</link><guid isPermaLink=\"true\">{url}</guid>"
+            f"<description>{e(p['description'])}</description><category>{e(p['category'])}</category>"
+            f"<pubDate>{rfc(p['date'])}</pubDate></item>")
+    latest = max(p.get("updated", p["date"]) for p in posts)
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>'
+            f"<title>{SITE_NAME}</title><link>{SITE}/</link><description>{e(TAGLINE)}</description><language>ko</language>"
+            f'<atom:link href="{SITE}/rss.xml" rel="self" type="application/rss+xml"/>'
+            f"<lastBuildDate>{rfc(latest)}</lastBuildDate>{''.join(items)}</channel></rss>\n")
+
+
 def main():
     posts = load_posts()
     for p in posts:
@@ -594,6 +655,7 @@ def main():
     elif ads_txt.exists():
         ads_txt.unlink()
     (ROOT / "sitemap.xml").write_text(build_sitemap(posts), encoding="utf-8")
+    (ROOT / "rss.xml").write_text(build_rss(posts), encoding="utf-8")
     (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
     print("index, categories, sitemap, robots")
 
