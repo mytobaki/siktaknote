@@ -42,6 +42,9 @@ OPERATOR = "김성호"
 CONTACT_EMAIL = "tobaki@mytobaki.com"
 POLICY_DATE = "2026-10-04"
 e = html.escape
+# 스타일이 바뀌면 주소 뒤 번호가 바뀌어 브라우저가 옛 CSS 를 쓰지 않는다
+import hashlib  # noqa: E402
+CSS_VER = hashlib.md5((ROOT / "assets" / "style.css").read_bytes()).hexdigest()[:8]
 
 
 def site_cfg(key):
@@ -225,7 +228,7 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 {chr(10).join(meta)}
 <link rel="icon" href="{pre}assets/favicon.svg" type="image/svg+xml">
 {HEAD_FONTS}
-<link rel="stylesheet" href="{pre}assets/style.css">
+<link rel="stylesheet" href="{pre}assets/style.css?v={CSS_VER}">
 </head>
 <body>
 <header class="site-header"><div class="wrap header-inner">
@@ -319,45 +322,60 @@ def info_box(post):
             f'<p class="info-note">{checked} 확인 기준. {e(note)}</p></section>')
 
 
-def share_block(url, title):
-    """글 하단 공유 버튼: 페이스북, 쓰레드, X, 주소 복사. 앞의 셋은 자바스크립트 없이도 동작한다."""
+SHARE_ICONS = {
+    # 흑백 아이콘 (글자색을 그대로 따라감)
+    "facebook": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8h3.3z"/></svg>',
+    "threads": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.6"/><path d="M15.6 12v1.3a2.6 2.6 0 0 0 5.2 0V12a8.8 8.8 0 1 0-3.5 7"/></g></svg>',
+    "x": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.8-6.3L5.5 21H2.4l7.3-8.3L2 3h6.3l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg>',
+    "link": '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></g></svg>',
+}
+
+
+def share_block(url, title, where):
+    """공유 버튼: 페이스북, 쓰레드, X, 주소 복사. where = top(제목 아래) | bottom(글 끝).
+    앞의 셋은 자바스크립트 없이도 동작하고, 주소 복사는 SHARE_SCRIPT 가 켠다."""
     q = lambda s: urllib.parse.quote(s, safe="")
     links = [
-        ("페이스북", f"https://www.facebook.com/sharer/sharer.php?u={q(url)}"),
-        ("쓰레드", f"https://www.threads.net/intent/post?text={q(title + chr(10) + url)}"),
-        ("X", f"https://twitter.com/intent/tweet?url={q(url)}&text={q(title)}"),
+        ("facebook", "페이스북", f"https://www.facebook.com/sharer/sharer.php?u={q(url)}"),
+        ("threads", "쓰레드", f"https://www.threads.net/intent/post?text={q(title + chr(10) + url)}"),
+        ("x", "X", f"https://twitter.com/intent/tweet?url={q(url)}&text={q(title)}"),
     ]
     items = "".join(
-        f'<a href="{e(href)}" target="_blank" rel="noopener noreferrer" aria-label="{e(name)}에 공유하기">{e(name)}</a>'
-        for name, href in links
+        f'<a class="sh sh-{key}" href="{e(href)}" target="_blank" rel="noopener noreferrer" '
+        f'aria-label="{e(name)}에 공유하기">{SHARE_ICONS[key]}<span>{e(name)}</span></a>'
+        for key, name, href in links
     )
-    return f"""<section class="share" aria-label="이 글 공유하기">
-    <h2>공유하기</h2>
-    <div class="share-btns">{items}<button type="button" class="share-copy" data-url="{e(url)}" hidden>주소 복사</button></div>
-    <script>
-    (function(){{
-      var b=document.querySelector('.share-copy');
-      if(!b)return;
-      b.hidden=false;
-      var t;
-      function done(m){{b.textContent=m;clearTimeout(t);t=setTimeout(function(){{b.textContent='주소 복사'}},1800)}}
-      function legacy(u){{
-        var x=document.createElement('textarea');
-        x.value=u;x.setAttribute('readonly','');x.style.position='fixed';x.style.opacity='0';
-        document.body.appendChild(x);x.select();
-        var ok=false;try{{ok=document.execCommand('copy')}}catch(_){{}}
-        document.body.removeChild(x);
-        done(ok?'복사했어요':'길게 눌러 복사해 주세요');
-      }}
-      b.addEventListener('click',function(){{
-        var u=b.getAttribute('data-url');
-        if(navigator.clipboard&&window.isSecureContext){{
-          navigator.clipboard.writeText(u).then(function(){{done('복사했어요')}},function(){{legacy(u)}});
-        }}else{{legacy(u)}}
-      }});
-    }})();
-    </script>
-  </section>"""
+    copy = (f'<button type="button" class="sh share-copy" data-url="{e(url)}" hidden>'
+            f'{SHARE_ICONS["link"]}<span>주소 복사</span></button>')
+    head = '<p class="share-label">이 글이 도움이 됐다면 나눠 주세요</p>' if where == "bottom" else ""
+    return (f'<div class="share share-{where}" role="group" aria-label="이 글 공유하기">'
+            f'{head}<div class="share-btns">{items}{copy}</div></div>')
+
+
+SHARE_SCRIPT = """<script>
+(function(){
+  var bs=document.querySelectorAll('.share-copy');
+  function legacy(u){
+    var x=document.createElement('textarea');
+    x.value=u;x.setAttribute('readonly','');x.style.position='fixed';x.style.opacity='0';
+    document.body.appendChild(x);x.select();
+    var ok=false;try{ok=document.execCommand('copy')}catch(_){}
+    document.body.removeChild(x);return ok;
+  }
+  Array.prototype.forEach.call(bs,function(b){
+    b.hidden=false;
+    var label=b.querySelector('span'),t;
+    function done(m){label.textContent=m;b.classList.add('is-done');clearTimeout(t);
+      t=setTimeout(function(){label.textContent='주소 복사';b.classList.remove('is-done')},1800)}
+    b.addEventListener('click',function(){
+      var u=b.getAttribute('data-url');
+      if(navigator.clipboard&&window.isSecureContext){
+        navigator.clipboard.writeText(u).then(function(){done('복사했어요')},function(){done(legacy(u)?'복사했어요':'길게 눌러 복사해 주세요')});
+      }else{done(legacy(u)?'복사했어요':'길게 눌러 복사해 주세요')}
+    });
+  });
+})();
+</script>"""
 
 
 def build_post(post, posts):
@@ -428,6 +446,7 @@ def build_post(post, posts):
   <span class="badge">{e(label_of(post))}</span>
   <h1>{e(post['title'])}</h1>
   <p class="meta">{date_html} · {mins}분이면 읽어요</p>
+  {share_block(url, post['title'], 'top')}
   <figure class="hero">{hero_html(post, 1280, 720, '../')}{credit(post)}</figure>
   <section class="summary" aria-label="3줄 요약"><h2>3줄 요약</h2><ul>{summary}</ul></section>
   {info_box(post)}
@@ -435,11 +454,12 @@ def build_post(post, posts):
 {render_body(post)}
   </div>
   <ul class="tags" aria-label="검색 키워드">{tags}</ul>
-  {share_block(url, post['title'])}
+  {share_block(url, post['title'], 'bottom')}
   {pn}
 </article>
 <section class="more"><h2>{e(more_title)}</h2><div class="grid">{rel}</div></section>
-</main>"""
+</main>
+{SHARE_SCRIPT}"""
     return page(
         title=f"{post['title']} | {SITE_NAME}",
         description=post["description"],

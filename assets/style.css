@@ -160,15 +160,25 @@ img{max-width:100%;height:auto;display:block}
 .tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;padding:0;margin:48px 0 32px}
 .tags li{font-size:.76rem;color:var(--muted);letter-spacing:.02em}
 /* share */
-.share{margin:0 0 32px}
-.share h2{font-size:.68rem;font-weight:500;letter-spacing:.2em;color:var(--muted);margin:0 0 12px}
-.share-btns{display:flex;flex-wrap:wrap;gap:8px}
-.share-btns a,.share-btns button{font:inherit;font-size:.78rem;font-weight:500;letter-spacing:.1em;line-height:1;text-decoration:none;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:12px 20px;min-height:42px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
-.share-btns a:hover,.share-btns button:hover{border-color:var(--fg)}
-.share-btns a:focus-visible,.share-btns button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
-.share-btns button[hidden]{display:none}
-.share-copy{background:var(--fg)!important;color:var(--bg)!important;border-color:var(--fg)!important}
-.share-copy:hover{opacity:.82}
+.share{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.share-top{margin:-18px 0 30px}
+.share-bottom{margin:0 0 36px;padding-top:26px;border-top:1px solid var(--line)}
+.share-label{margin:0;font-size:.74rem;letter-spacing:.06em;color:var(--muted)}
+.share-btns{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px}
+.sh{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.76rem;font-weight:500;letter-spacing:.06em;line-height:1;text-decoration:none;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:10px 16px 10px 13px;min-height:40px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.sh svg{width:17px;height:17px;flex:none}
+.sh:hover{border-color:var(--fg)}
+.sh:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.sh[hidden]{display:none}
+.share-copy.is-done{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+@media (max-width:520px){
+  .share-top .sh span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .share-top .sh{width:40px;height:40px;padding:0;justify-content:center}
+  .share-top .share-copy.is-done{width:auto;padding:0 14px}
+  .share-top .share-copy.is-done span{position:static;width:auto;height:auto;clip:auto}
+  .share-bottom .share-btns{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .share-bottom .sh{justify-content:center}
+}
 .prev-next{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .pn{display:flex;flex-direction:column;gap:6px;text-decoration:none;font-size:.92rem;font-weight:500;line-height:1.5;letter-spacing:-.02em;padding:22px 0;min-width:0}
 .pn:hover{text-decoration:underline;text-underline-offset:4px}
