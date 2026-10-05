@@ -159,6 +159,16 @@ img{max-width:100%;height:auto;display:block}
 
 .tags{list-style:none;display:flex;flex-wrap:wrap;gap:6px 14px;padding:0;margin:48px 0 32px}
 .tags li{font-size:.76rem;color:var(--muted);letter-spacing:.02em}
+/* share */
+.share{margin:0 0 32px}
+.share h2{font-size:.68rem;font-weight:500;letter-spacing:.2em;color:var(--muted);margin:0 0 12px}
+.share-btns{display:flex;flex-wrap:wrap;gap:8px}
+.share-btns a,.share-btns button{font:inherit;font-size:.78rem;font-weight:500;letter-spacing:.1em;line-height:1;text-decoration:none;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:0;padding:12px 20px;min-height:42px;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.share-btns a:hover,.share-btns button:hover{border-color:var(--fg)}
+.share-btns a:focus-visible,.share-btns button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.share-btns button[hidden]{display:none}
+.share-copy{background:var(--fg)!important;color:var(--bg)!important;border-color:var(--fg)!important}
+.share-copy:hover{opacity:.82}
 .prev-next{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .pn{display:flex;flex-direction:column;gap:6px;text-decoration:none;font-size:.92rem;font-weight:500;line-height:1.5;letter-spacing:-.02em;padding:22px 0;min-width:0}
 .pn:hover{text-decoration:underline;text-underline-offset:4px}

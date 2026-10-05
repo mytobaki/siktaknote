@@ -26,6 +26,7 @@ import json
 import pathlib
 import re
 import sys
+import urllib.parse
 
 import markdown
 
@@ -318,6 +319,47 @@ def info_box(post):
             f'<p class="info-note">{checked} 확인 기준. {e(note)}</p></section>')
 
 
+def share_block(url, title):
+    """글 하단 공유 버튼: 페이스북, 쓰레드, X, 주소 복사. 앞의 셋은 자바스크립트 없이도 동작한다."""
+    q = lambda s: urllib.parse.quote(s, safe="")
+    links = [
+        ("페이스북", f"https://www.facebook.com/sharer/sharer.php?u={q(url)}"),
+        ("쓰레드", f"https://www.threads.net/intent/post?text={q(title + chr(10) + url)}"),
+        ("X", f"https://twitter.com/intent/tweet?url={q(url)}&text={q(title)}"),
+    ]
+    items = "".join(
+        f'<a href="{e(href)}" target="_blank" rel="noopener noreferrer" aria-label="{e(name)}에 공유하기">{e(name)}</a>'
+        for name, href in links
+    )
+    return f"""<section class="share" aria-label="이 글 공유하기">
+    <h2>공유하기</h2>
+    <div class="share-btns">{items}<button type="button" class="share-copy" data-url="{e(url)}" hidden>주소 복사</button></div>
+    <script>
+    (function(){{
+      var b=document.querySelector('.share-copy');
+      if(!b)return;
+      b.hidden=false;
+      var t;
+      function done(m){{b.textContent=m;clearTimeout(t);t=setTimeout(function(){{b.textContent='주소 복사'}},1800)}}
+      function legacy(u){{
+        var x=document.createElement('textarea');
+        x.value=u;x.setAttribute('readonly','');x.style.position='fixed';x.style.opacity='0';
+        document.body.appendChild(x);x.select();
+        var ok=false;try{{ok=document.execCommand('copy')}}catch(_){{}}
+        document.body.removeChild(x);
+        done(ok?'복사했어요':'길게 눌러 복사해 주세요');
+      }}
+      b.addEventListener('click',function(){{
+        var u=b.getAttribute('data-url');
+        if(navigator.clipboard&&window.isSecureContext){{
+          navigator.clipboard.writeText(u).then(function(){{done('복사했어요')}},function(){{legacy(u)}});
+        }}else{{legacy(u)}}
+      }});
+    }})();
+    </script>
+  </section>"""
+
+
 def build_post(post, posts):
     cat = cat_of(post)
     same = [p for p in posts if p["category"] == post["category"]]
@@ -393,6 +435,7 @@ def build_post(post, posts):
 {render_body(post)}
   </div>
   <ul class="tags" aria-label="검색 키워드">{tags}</ul>
+  {share_block(url, post['title'])}
   {pn}
 </article>
 <section class="more"><h2>{e(more_title)}</h2><div class="grid">{rel}</div></section>
