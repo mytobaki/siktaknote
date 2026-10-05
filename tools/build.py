@@ -179,8 +179,7 @@ def render_body(post):
 HEAD_FONTS = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">'
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
-    '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700'
-    '&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">'
+    '<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">'
 )
 
 
@@ -215,7 +214,7 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
     if ads:
         meta.append(f'<meta name="google-adsense-account" content="{ads}">')
         meta.append(f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ads}" crossorigin="anonymous"></script>')
-    nav = "".join(f'<a href="{pre}{c["slug"]}.html">{e(c["name"])}</a>' for c in CATS)
+    nav = "".join(f'<a href="{pre}{c["slug"]}.html">{e(c["name"])}</a>' for c in CATS) + f'<a href="{pre}about.html">소개</a>'
     return f"""<!doctype html>
 <html lang="ko">
 <head>
@@ -229,12 +228,12 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 </head>
 <body>
 <header class="site-header"><div class="wrap header-inner">
-  <a class="logo" href="{pre}index.html">식탁<span>노트</span></a>
+  <a class="logo" href="{pre}index.html" aria-label="식탁노트 홈">식탁노트</a>
   <nav class="nav" aria-label="코너">{nav}</nav>
 </div></header>
 {body}
 <footer class="site-footer"><div class="wrap">
-  <p class="foot-name">식탁<span>노트</span></p>
+  <p class="foot-name">식탁노트</p>
   <p>{TAGLINE}. 부엌에서 바로 써먹는 살림 꿀팁과, 밥상에서 시작해 지역으로 이어지는 이야기를 정성껏 담았어요.</p>
   <p class="foot-links"><a href="{pre}about.html">식탁노트 소개</a><a href="{pre}privacy.html">개인정보처리방침</a><a href="{pre}contact.html">문의</a></p>
   <p class="foot-small">일부 사진은 <a href="https://unsplash.com/?utm_source=siktaknote&amp;utm_medium=referral" rel="noopener">Unsplash</a>의 무료 이미지를 사용합니다. 행사 일정과 요금은 바뀔 수 있으니 방문 전 공식 안내를 확인해 주세요.</p>
@@ -253,7 +252,7 @@ def photo_hero(post, w, h, lazy=True):
     return (f'<div class="photo-hero" role="img" aria-label="{e(hero["alt"])}">'
             f'<img src="{unsplash(hero["bg"], w, h)}" alt=""{load} width="{w}" height="{h}" onerror="this.remove()">'
             f'<div class="ph-shade"></div>'
-            f'<div class="ph-top"><span class="ph-brand">식탁<b>노트</b></span><span class="ph-chip">{e(label_of(post))}</span></div>'
+            f'<div class="ph-top"><span class="ph-brand">식탁노트</span><span class="ph-chip">{e(label_of(post))}</span></div>'
             f'<div class="ph-text"><strong>{e(card["title"])}</strong>{sub}</div></div>')
 
 
@@ -263,6 +262,14 @@ def hero_html(post, w, h, pre):
         return photo_hero(post, w, h, lazy=False)
     return (f'<img src="{hero_src(post, w, h, pre)}" alt="{e(hero["alt"])}" '
             f'width="{w}" height="{h}" fetchpriority="high">')
+
+
+def credit_text(post):
+    h = post["hero"]
+    if not (h.get("id") or h.get("bg")):
+        return ""
+    return (f'<span class="hh-credit">사진: {e(h["credit"])} / '
+            '<a href="https://unsplash.com/?utm_source=siktaknote&amp;utm_medium=referral" rel="noopener">Unsplash</a></span>')
 
 
 def credit(post):
@@ -423,15 +430,26 @@ def build_index(posts):
         if items:
             total = sum(1 for p in posts if p["category"] == cat["name"])
             blocks.append(section_block(cat, items, total))
+    h1a, _, h1b = TAGLINE.partition(", ")
+    h1a = h1a + "," if h1b else h1a
     body = f"""<main class="wrap">
-<section class="intro">
-  <h1>{TAGLINE}</h1>
-  <p>떡이 딱딱해져서 막막했던 순간의 해결법부터, 밥상에서 시작해 우리 지역 곳곳으로 떠나는 축제 소식과 맛 이야기, 옛이야기까지 쉽고 따뜻하게 모았어요.</p>
+<section class="home-hero">
+  <div class="hh-text">
+    <p class="eyebrow">Kitchen · Local · Stories</p>
+    <h1>{e(h1a)}<br>{e(h1b)}</h1>
+    <p class="hh-lead">떡이 딱딱해져서 막막했던 순간의 해결법부터, 밥상에서 시작해 우리 지역 곳곳으로 떠나는 축제 소식과 맛 이야기, 옛이야기까지 쉽고 따뜻하게 모았어요.</p>
+    <div class="hh-actions"><a class="btn" href="kitchen.html">부엌 꿀팁 보기<span aria-hidden="true">→</span></a><a class="btn-line" href="local.html">로컬 이야기</a></div>
+  </div>
+  <figure class="hh-visual">
+    <a href="posts/{featured['slug']}.html"><img src="{hero_src(featured, 960, 1080)}" alt="{e(featured['hero']['alt'])}" width="960" height="1080" fetchpriority="high" onerror="this.style.visibility='hidden'"></a>
+    <figcaption><a href="posts/{featured['slug']}.html"><small>지금 읽을 글</small>{e(featured['title'])}</a>{credit_text(featured)}</figcaption>
+  </figure>
 </section>
-<section class="feature">
-  <div class="list-head"><h2>지금 읽을 글</h2></div>
-  {post_card(featured, 0, big=True)}
-</section>
+<ul class="values" aria-label="식탁노트가 지키는 것">
+  <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="m10 14 2 2 4-4"/></svg><span>출처를 확인한 정보</span></li>
+  <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h14a0 0 0 0 1 0 0 7 7 0 0 1-7 7 7 7 0 0 1-7-7z"/><path d="M17 12.5h2.5a1.5 1.5 0 0 0 0-3H17"/><path d="M8 7c0-1.2 1-1.8 1-3M12 7c0-1.2 1-1.8 1-3"/><path d="M6 21h8"/></svg><span>바로 따라 하는 방법</span></li>
+  <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.4-6-10.5a6 6 0 0 1 12 0C18 15.6 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.2"/></svg><span>밥상에서 지역까지</span></li>
+</ul>
 {"".join(blocks)}
 </main>"""
     jsonld = [
