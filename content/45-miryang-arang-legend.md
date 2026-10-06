@@ -38,6 +38,22 @@ info:
       url: https://korean.visitkorea.or.kr/detail/ms_detail.do?cotid=d2c4335b-9b73-4b2b-baec-fcd831eeed3b
   checked: 2026-10-06
   note: "관람 시간과 주차 요금은 바뀔 수 있어요. 가시기 전에 영남루 문의 전화로 확인하세요."
+photos:
+- id: photo-1752256179419-b17497954094
+  alt: 보름달 빛이 비치는 밤의 물가와 산
+  credit: insung yoon
+- id: photo-1626903896356-06b7ca2810fd
+  alt: 어둑한 대나무 숲 사이로 난 길
+  credit: Drew Bae
+- id: photo-1618237600880-fb9d72e98393
+  alt: 밤에 불을 밝힌 한옥 건물
+  credit: zero take
+- id: photo-1701525181804-efc707196fff
+  alt: 박물관에 전시된 옛 책의 글씨
+  credit: Clark Gu
+- id: photo-1665070062104-1e5ded66ea0f
+  alt: 강이 굽어 도는 바위 위에 선 정자 (영남루 사진은 아니에요)
+  credit: Photos of Korea
 cards:
   - id: hero
     type: title

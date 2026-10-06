@@ -14,6 +14,22 @@ summary:
   - 단감은 물기 없이 한 개씩 감싸 냉장고 채소칸이나 김치냉장고에 두면 좋습니다.
   - 떫은감은 실온에서 말랑하게 익혀야 떫은맛이 빠지고, 사과와 같이 두면 더 빨리 익어요.
   - 다 익은 홍시는 오래 못 가니, 바로 먹지 않을 건 냉동해 두는 게 좋습니다.
+photos:
+- id: photo-1762980622901-d4c74a149cee
+  alt: 상자에 가득 담긴 잘 익은 주황색 감
+  credit: Madeline Liu
+- id: photo-1576714047433-c5f32378a30b
+  alt: 나란히 놓인 감 네 개
+  credit: Eden
+- id: photo-1790770408277-95eea63d899a
+  alt: 가을 낙엽 위에 호박, 사과와 함께 놓인 감
+  credit: Phạm Trọng Họ
+- id: photo-1603886438830-007106eb5b39
+  alt: 흰 접시에 담긴 말랑하게 익은 감
+  credit: Ladimir Ladroid
+- id: photo-1706783663735-fc851f7a191b
+  alt: 손에 들고 반쯤 먹은 감
+  credit: Mehrdad Jiryaee
 cards:
   - id: hero
     type: title

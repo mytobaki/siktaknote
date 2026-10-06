@@ -14,6 +14,22 @@ summary:
   - 통 단호박은 바람이 잘 통하는 서늘한 그늘에 두면 됩니다. 수확 뒤 시간이 지나면 전분이 당으로 바뀌어 단맛이 오른다고 알려져 있어요.
   - 칼을 댄 단호박은 씨와 속을 긁어내고 랩으로 감싸 냉장하고, 며칠 안에 드시는 게 좋습니다.
   - 껍질이 너무 단단하면 전자레인지에 2~3분쯤 살짝 데운 뒤 자르면 칼이 한결 잘 들어가요.
+photos:
+- id: photo-1782973048178-9b00a78cdcea
+  alt: 수확해 쌓아 둔 짙은 초록색 호박
+  credit: Tho Nguyen Huu
+- id: photo-1700051358751-0fbcb66362bd
+  alt: 금속 바구니에 담긴 바나나와 사과
+  credit: Dixit Dhinakaran
+- id: photo-1766566631712-8e668ccdf3a7
+  alt: 반으로 갈라 씨와 주황색 속살이 드러난 호박
+  credit: Jianfeng Yang
+- id: photo-1533924049770-7c32435557c5
+  alt: 도마 위에 썰어 놓은 호박 조각
+  credit: Nick Collins
+- id: photo-1579008004649-70f7dc765c62
+  alt: 도마에서 호박을 칼로 써는 모습
+  credit: Louis Hansel
 cards:
   - id: hero
     type: title

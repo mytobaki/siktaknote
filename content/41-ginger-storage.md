@@ -14,6 +14,22 @@ summary:
   - 흙생강은 씻지 말고 흙이 묻은 그대로 신문지에 싸 두는 게 좋습니다.
   - 생강은 너무 차가운 곳을 싫어해서, 냉장은 짧게 두고 오래 둘 건 손질해 얼려요.
   - 무르거나 곰팡이가 퍼진 생강은 그 부분만 잘라 쓰지 말고 버리는 게 안전합니다.
+photos:
+- id: photo-1622865313564-d985bc4a295d
+  alt: 흙 위에 놓인 생강 덩이
+  credit: MChe Lee
+- id: photo-1573729065599-a8d4bd3bad96
+  alt: 스테인리스 숟가락 옆에 놓인 생강과 사과, 계피
+  credit: Megumi Nachev
+- id: photo-1630623093145-f606591c2546
+  alt: 통생강 한 덩이와 얇게 썬 생강 조각
+  credit: NoonBrew
+- id: photo-1634612828694-8988aa4254df
+  alt: 나무 도마 위에 놓인 생강
+  credit: Faran Raufi
+- id: photo-1741517802684-ba07c444a5d2
+  alt: 울퉁불퉁한 마디와 연갈색 껍질이 보이는 생강 클로즈업
+  credit: Zoshua Colah
 cards:
   - id: hero
     type: title

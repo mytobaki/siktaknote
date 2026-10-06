@@ -40,6 +40,22 @@ info:
       url: https://weatheri.co.kr/board/board03_read.php?id=325
   checked: 2026-10-06
   note: "단풍 예상일은 날씨에 따라 달라집니다. 탐방로 통제와 예약 여부는 출발 전에 국립공원공단에서 꼭 확인하세요."
+photos:
+- id: photo-1700061291361-b8aa1f40abb8
+  alt: 늦가을 단풍이 든 설악산 바위 능선
+  credit: Austin Curtis
+- id: photo-1676705910596-10a68dccbe8e
+  alt: 설악산 계곡 위 다리를 건너는 등산객과 가을 숲
+  credit: Alexa Soh
+- id: photo-1700307927087-8f166c9fc2bf
+  alt: 단풍 든 숲 사이로 흐르는 계곡 (오대산 사진은 아니에요)
+  credit: Ken Cheung
+- id: photo-1698767676771-0fa313b96130
+  alt: 소나무 너머로 보이는 설악산 바위 봉우리
+  credit: Perspective Nature
+- id: photo-1676705909415-0c92e5787c96
+  alt: 바위와 가을 나무 너머로 펼쳐진 설악산 산줄기
+  credit: Alexa Soh
 cards:
   - id: hero
     type: title

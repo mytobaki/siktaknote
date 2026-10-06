@@ -14,6 +14,22 @@ summary:
   - 고춧가루는 습기와 빛에 약해서, 밀폐 용기나 지퍼백에 담아 차갑게 두는 게 좋습니다.
   - 자주 쓰는 양만 작게 덜어 냉장하고, 나머지는 소분해서 김치냉장고나 냉동실에 두세요.
   - 곰팡이가 피었거나 벌레가 생긴 고춧가루는 아깝더라도 버리는 게 안전합니다.
+photos:
+- id: photo-1580116270858-8a0d62b15426
+  alt: 부엌 선반에 줄지어 놓인 양념 병들
+  credit: Heather McKean
+- id: photo-1710947949965-8150d227d337
+  alt: 문을 연 냉장고 안에 가득 채워진 식재료
+  credit: Nicolas J. Barbier
+- id: photo-1577563717655-919fc57789b4
+  alt: 금속 숟가락에 소복이 덜어 낸 붉은 고추 가루
+  credit: Volodymyr Hryshchenko
+- id: photo-1547332226-395d746d139a
+  alt: 흰 그릇에 담긴 붉은 고추 가루
+  credit: Andy Holmes
+- id: photo-1763994685403-88aaa750af61
+  alt: 큰 그릇에 가득 담긴 마른 붉은 고추
+  credit: Fenghua
 cards:
   - id: hero
     type: title
