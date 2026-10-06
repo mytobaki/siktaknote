@@ -40,6 +40,22 @@ info:
       url: https://www.kwnews.co.kr/article/20261001500265
   checked: 2026-10-06
   note: "날짜와 장소는 입점부스 모집 공고를 전한 기사로 확인했어요. 프로그램과 교통 안내는 양구문화재단 공지를 확인하세요."
+photos:
+- id: photo-1768113802385-59b5bb8e8c34
+  alt: 흙에서 자라는 흰 무와 푸른 무청
+  credit: Peggie Mishra
+- id: photo-1707525662674-22952124ada8
+  alt: 산을 배경으로 펼쳐진 가을 무밭
+  credit: Jinhan Moon
+- id: photo-1774527917793-6440007c2c0a
+  alt: 대나무 발 위에 펼쳐 말리는 잎채소
+  credit: runda choo
+- id: photo-1760445278086-d26317282e10
+  alt: 노란 소쿠리에 담긴 손질한 잎채소
+  credit: runda choo
+- id: photo-1746718547557-1a0e05bed94b
+  alt: 보글보글 끓는 한국식 찌개
+  credit: lee seunghyub
 cards:
   - id: hero
     type: title

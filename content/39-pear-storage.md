@@ -14,6 +14,22 @@ summary:
   - 배는 키친타월로 한 개씩 감싸고 비닐이나 랩으로 한 번 더 싸서 냉장하면 됩니다.
   - 사과에서 나오는 에틸렌 때문에 배가 빨리 물러질 수 있어서, 둘은 꼭 따로 보관하는 게 좋아요.
   - 깎은 배는 설탕물이나 레몬물에 잠깐 담갔다가 물기를 닦아 밀폐하고, 되도록 빨리 드세요.
+photos:
+- id: photo-1764521882411-549ceb0160a7
+  alt: 접시에 놓인 배 두 개와 썬 사과
+  credit: Ati Nabaut
+- id: photo-1696650501942-0ea5775961b1
+  alt: 나무 상자에 가득 담긴 노란 배
+  credit: Jason Leung
+- id: photo-1572929738655-ce9821a64994
+  alt: 얇게 썬 배 조각
+  credit: khloe arledge
+- id: photo-1635843124409-4fa9fb5faa78
+  alt: 시장에 쌓여 있는 노란 배
+  credit: engin akyurt
+- id: photo-1592911343180-7b8d7b6211ff
+  alt: 갈색으로 상해 물러진 배
+  credit: Anita Jankovic
 cards:
   - id: hero
     type: title

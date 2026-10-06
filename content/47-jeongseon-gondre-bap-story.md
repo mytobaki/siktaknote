@@ -17,6 +17,22 @@ summary:
   - 곤드레는 국화과 여러해살이풀인 고려엉겅퀴의 어린잎으로, 정선과 평창의 특산물로 알려져 있습니다.
   - 쌀이 귀하던 시절 곤드레에 곡식을 조금 섞어 죽을 쑤어 먹던 데서 지금의 곤드레밥이 나왔다고 해요.
   - 정선 오일장은 끝자리가 2와 7인 날 열리고, 장터에서 곤드레밥을 맛볼 수 있습니다.
+photos:
+- id: photo-1754810940905-19a8d26f870e
+  alt: 강원 산비탈에 줄지어 자라는 고랭지 배추밭
+  credit: PJH
+- id: photo-1696866402711-d34bc8c2283f
+  alt: 정선 민둥산 숲길을 걸어 오르는 등산객들의 뒷모습
+  credit: Jinhan Moon
+- id: photo-1711247355173-5341ee8ecb25
+  alt: 흰 그릇에 담긴 푸른 나물과 젓가락
+  credit: Leo Ni
+- id: photo-1590301157890-4810ed352733
+  alt: 여러 가지 나물을 얹은 비빔밥 그릇
+  credit: Vicky Ng
+- id: photo-1774948207286-7e222861b2b6
+  alt: 전통시장 좌판에 놓인 감자·고구마 같은 뿌리채소와 약초
+  credit: DOKYUNG KIM
 cards:
   - id: hero
     type: title

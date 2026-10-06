@@ -14,6 +14,19 @@ summary:
   - 김은 공기를 빼고 밀봉해서 냉동실에 두는 게 가장 좋습니다.
   - 냉동실에서 꺼내면 봉지를 바로 열지 말고 잠깐 기다렸다 여세요.
   - 이미 눅눅해진 김은 약한 불의 팬이나 전자레인지로 바삭함을 되살릴 수 있습니다.
+photos:
+- id: photo-1788997295075-69d15c0b6772
+  alt: 빛에 비친 얇은 구운 김 한 장
+  credit: Joshua Hoehne
+- id: photo-1786417340764-b918ff6e8562
+  alt: 반찬 통과 병이 들어 있는 냉장고 안
+  credit: Matheus Araujo
+- id: photo-1710018356771-e08b949dbb70
+  alt: 물방울이 맺힌 비닐봉지
+  credit: Jael Coon
+- id: photo-1631985455894-65311148a768
+  alt: 가스레인지 화구의 파란 불꽃
+  credit: Avinash Shet
 cards:
   - id: hero
     type: title
