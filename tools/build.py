@@ -88,9 +88,17 @@ def unsplash(pid, w, h=None):
     return f"https://images.unsplash.com/{pid}{q}"
 
 
+def local_photo(fname, pre=None):
+    """assets/photos/ 에 넣은 사진 주소. pre 가 None 이면 절대 주소."""
+    path = f"assets/photos/{fname}"
+    return f"{SITE}/{path}" if pre is None else f"{pre}{path}"
+
+
 def hero_src(post, w, h, pre=None):
     """대표 이미지 주소. pre 가 None 이면 절대 주소."""
     hero = post["hero"]
+    if hero.get("file"):
+        return local_photo(hero["file"], pre)
     if hero.get("id"):
         return unsplash(hero["id"], w, h)
     if hero.get("bg"):
@@ -101,6 +109,8 @@ def hero_src(post, w, h, pre=None):
 
 def og_image(post):
     hero = post["hero"]
+    if hero.get("file"):
+        return local_photo(hero["file"])
     if hero.get("bg"):
         return unsplash(hero["bg"], 1200, 630)
     if hero.get("card"):
@@ -247,14 +257,14 @@ def page(*, title, description, canonical, body, depth, og_image=None, og_type="
 """
 
 
-def photo_hero(post, w, h, lazy=True):
+def photo_hero(post, w, h, lazy=True, pre="../"):
     """사진 배경 위에 제목을 얹은 대표 이미지 (hero.bg 가 있는 글)."""
     hero = post["hero"]
     card = next(c for c in post["cards"] if c["id"] == hero["card"])
     sub = f'<span>{e(card["sub"])}</span>' if card.get("sub") else ""
     load = ' loading="lazy"' if lazy else ' fetchpriority="high"'
     return (f'<div class="photo-hero" role="img" aria-label="{e(hero["alt"])}">'
-            f'<img src="{unsplash(hero["bg"], w, h)}" alt=""{load} width="{w}" height="{h}" onerror="this.remove()">'
+            f'<img src="{local_photo(hero["file"], pre) if hero.get("file") else unsplash(hero["bg"], w, h)}" alt=""{load} width="{w}" height="{h}" onerror="this.remove()">'
             f'<div class="ph-shade"></div>'
             f'<div class="ph-top"><span class="ph-brand">식탁노트</span><span class="ph-chip">{e(label_of(post))}</span></div>'
             f'<div class="ph-text"><strong>{e(card["title"])}</strong>{sub}</div></div>')
@@ -262,14 +272,16 @@ def photo_hero(post, w, h, lazy=True):
 
 def hero_html(post, w, h, pre):
     hero = post["hero"]
-    if hero.get("bg"):
-        return photo_hero(post, w, h, lazy=False)
+    if hero.get("card") and (hero.get("bg") or hero.get("file")):
+        return photo_hero(post, w, h, lazy=False, pre=pre)
     return (f'<img src="{hero_src(post, w, h, pre)}" alt="{e(hero["alt"])}" '
             f'width="{w}" height="{h}" fetchpriority="high">')
 
 
 def credit_text(post):
     h = post["hero"]
+    if h.get("file"):
+        return f'<span class="hh-credit">{e(h.get("credit", ""))}</span>' if h.get("credit") else ""
     if not (h.get("id") or h.get("bg")):
         return ""
     return (f'<span class="hh-credit">사진: {e(h["credit"])} / '
@@ -278,6 +290,8 @@ def credit_text(post):
 
 def credit(post):
     h = post["hero"]
+    if h.get("file"):
+        return f'<figcaption>{e(h["credit"])}</figcaption>' if h.get("credit") else ""
     if not (h.get("id") or h.get("bg")):
         return ""
     link = "https://unsplash.com/?utm_source=siktaknote&utm_medium=referral"
@@ -285,8 +299,8 @@ def credit(post):
 
 
 def thumb_inner(p, w, h, pre, lazy=True):
-    if p["hero"].get("bg"):
-        return photo_hero(p, w, h, lazy)
+    if p["hero"].get("card") and (p["hero"].get("bg") or p["hero"].get("file")):
+        return photo_hero(p, w, h, lazy, pre)
     load = 'loading="lazy"' if lazy else 'fetchpriority="high"'
     return (f'<img src="{hero_src(p, w, h, pre)}" alt="{e(p["hero"]["alt"])}" '
             f'{load} width="{w}" height="{h}">')

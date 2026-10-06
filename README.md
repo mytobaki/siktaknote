@@ -24,6 +24,9 @@
 - 행사 일정은 공식 사이트나 한국관광공사에서 확인하고, 언론 보도로만 확인한 것은 글에 그렇게 밝힌다.
 - 홈 상단 큰 카드는 `featured: true`인 글(없으면 최신 글).
 
+### 직접 올린 사진을 대표 이미지로 (hero.file)
+사진을 `assets/photos/<slug>.jpg`(가로 1280px)로 넣고, 부엌 꿀팁은 `hero: {file, alt, credit}`, 로컬 이야기는 `hero: {card: hero, file, alt, credit}`(사진 위에 제목)로 쓴다. 캔바 AI 이미지는 credit 에 그렇게 밝히고, 장소 이미지는 "실제 장소 사진이 아니에요"를 붙인다.
+
 ### 대표 이미지에 사진 배경 (hero.bg)
 `hero: {card: hero, alt, bg: <Unsplash photo-id>, credit: 촬영자}` 로 쓰면 카드 PNG 대신 사진 위에 제목(`cards` 의 hero 카드 title/sub)을 얹어 보여줍니다. 사진은 Unsplash 에서 불러오며, 불러오지 못하면 초록 바탕 위에 제목만 남습니다. 공유 미리보기(og:image)에는 사진만 쓰입니다.
 
