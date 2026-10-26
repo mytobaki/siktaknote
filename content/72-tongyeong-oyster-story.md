@@ -10,7 +10,9 @@ description: 통영 굴은 왜 유명할까요? 줄에 매달아 키우는 수�
 keywords: [통영 굴, 통영 굴 제철, 통영 굴 수하식, 통영 햇굴 초매식, 굴밥 만드는 법, 굴전, 굴국, 굴 고르는 법]
 hero:
   card: hero
-  alt: 통영 굴 이야기 줄에 매달아 키운 햇굴과 굴 요리 3가지
+  alt: 안개 낀 통영 바다와 숲이 우거진 섬들
+  bg: photo-1761654887793-e4084a306564
+  credit: Cecelia Chang
 summary:
   - 통영 굴은 물살이 거칠지 않은 남해안 내만에서 줄에 매달아 키우는 수하식으로 길러져요.
   - 2026년 10월 22일 통영에서 햇굴 첫 경매인 초매식이 열렸고, 출하는 내년 봄과 초여름까지 이어진다고 보도됐습니다.
@@ -34,6 +36,22 @@ info:
       url: https://www.ktriptips.com/kor/festival/3400809
   checked: 2026-10-26
   note: "행사 내용은 주최 측 사정에 따라 바뀔 수 있습니다. 굴 메뉴가 나오는지는 가시기 전에 문의처(070-4680-1718)로 확인해 주세요."
+photos:
+- id: photo-1761654887799-7318abf9fd2b
+  alt: 통영 바다에 초록빛 섬들이 점점이 떠 있는 풍경
+  credit: Cecelia Chang
+- id: photo-1761654887830-1a45f7a35ede
+  alt: 통영 항구에 정박한 배들과 건물, 산
+  credit: Cecelia Chang
+- id: photo-1717251752308-2ef72f07484e
+  alt: 껍데기째 쌓여 있는 굴 더미
+  credit: Mitili Mitili
+- id: photo-1633321094192-388268512e0f
+  alt: 얼음 위에 레몬을 곁들여 담아낸 굴 한 접시
+  credit: Anima Visual
+- id: photo-1761654887825-35e49d512c67
+  alt: 통영의 전통시장 거리 풍경
+  credit: Cecelia Chang
 cards:
   - id: hero
     type: title

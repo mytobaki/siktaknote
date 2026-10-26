@@ -10,11 +10,29 @@ description: 바다 없는 안동에서 간고등어가 대표 음식이 된 이
 keywords: [안동 간고등어, 간고등어 유래, 안동 간고등어 이야기, 간잽이, 간고등어 굽는 법, 간고등어 먹는 법, 안동 향토음식, 안동 챗거리장터]
 hero:
   card: hero
-  alt: 소금을 쳐 숙성한 안동 간고등어
+  alt: 석쇠에 구운 고등어
+  bg: photo-1551014700-0ca41391f312
+  credit: Anton Nikolov
 summary:
   - 안동은 내륙이라 동해안 영덕에서 고등어를 지고 오며 소금을 쳤고, 그게 간고등어가 됐다고 전해져요.
   - 한국관광공사는 영덕 강구항에서 안동 채거리장까지 이틀이 걸렸다고 소개합니다.
   - 1970년대 냉동 저장법이 퍼지며 염도가 낮아졌고, 1999년 포장 제품이 나오면서 지역 특산으로 알려졌습니다.
+photos:
+- id: photo-1757254467401-efc96f954913
+  alt: 경북 포항 방파제의 붉은 등대와 잔잔한 바다
+  credit: byquincy
+- id: photo-1598598218968-47720f64c360
+  alt: 소금 알갱이를 가까이서 찍은 모습
+  credit: Maksym Sirman
+- id: photo-1568727349458-1bb59fb3fb63
+  alt: 바구니에 가득 담긴 잡은 생선
+  credit: Richard Bell
+- id: photo-1761303506087-9788d0a98e87
+  alt: 한식 반찬과 밥, 국이 차려진 밥상
+  credit: Cecelia Chang
+- id: photo-1689590735625-760f8b2fa77a
+  alt: 시장 가게에 진열된 여러 가지 생선
+  credit: Luna Wang
 cards:
   - id: hero
     type: title

@@ -7,12 +7,29 @@ title: 굴 손질·보관법 3가지 — 씻는 법, 냉장, 냉동
 description: 찬바람이 불면 굴이 생각나는데요. 소금물로 씻는 손질과 냉장·냉동 보관 3가지, 신선한 굴 고르는 법, 식약처가 알린 85℃ 1분 가열 기준, 고령자·영유아가 조심할 점까지 하나하나 꼼꼼하고 차근차근 알려 드립니다. 올겨울 굴 드시기 전에 읽어 보세요.
 keywords: [굴 손질법, 굴 씻는 법, 굴 보관법, 굴 냉동 보관, 굴 냉장 보관, 신선한 굴 고르는 법, 굴 노로바이러스, 생굴 소금물]
 hero:
-  card: hero
-  alt: 굴 손질·보관법 3가지를 담은 제목 이미지
+  id: photo-1529476498401-2d62bcfe433a
+  alt: 얼음 위에 놓인 굴
+  credit: Jason Leung
 summary:
   - 깐 굴은 소금물에 살살 흔들어 씻고, 맑은 물에 헹궈 물기를 빼 주세요.
   - 냉장은 5℃ 이하에서 되도록 빨리 드시고, 오래 두려면 한 번 먹을 만큼씩 나눠 냉동하는 게 좋습니다.
   - 굴은 중심온도 85℃에서 1분 이상 익혀 드시는 것이 식약처와 서울시의 안내입니다.
+photos:
+- id: photo-1681311021869-a17bf4b3c7c8
+  alt: 껍데기째 쌓여 있는 굴
+  credit: Rich @ rhubbardstockfootage
+- id: photo-1680404915561-441754f32ef5
+  alt: 칼로 굴을 까는 모습
+  credit: Thomas Wavid Johns
+- id: photo-1518022198544-e2f3ae7668f8
+  alt: 그릇에 담긴 신선한 굴
+  credit: Sargent Seal
+- id: photo-1569420077790-afb136b3bb8c
+  alt: 투명한 용기 네 개에 나눠 담은 음식
+  credit: S'well
+- id: photo-1729268155481-3a5adc51054d
+  alt: 얼음 위 쟁반에 놓인 굴
+  credit: Mitili Mitili
 cards:
   - id: hero
     type: title
