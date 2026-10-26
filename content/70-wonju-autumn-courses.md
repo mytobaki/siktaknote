@@ -11,6 +11,8 @@ keywords: [원주 가을 여행, 원주 가볼만한곳, 원주 단풍 코스, �
 hero:
   card: hero
   alt: 노랗고 붉게 물든 가을 숲길 위에 원주 가을 나들이 3코스 제목을 얹은 대표 이미지
+  bg: photo-1636499017816-bd34ac2e9f67
+  credit: Samuel Svec
 summary:
   - 반계리 은행나무 축제가 10월 26일부터 11월 8일까지 열리는데요. 가까운 소금산 그랜드밸리와 묶어 하루 코스로 짜 볼 수 있습니다.
   - 치악산은 기상청 관측으로 10월 19일에 절정이 지났어요. 구룡사에서 세렴폭포까지는 걷기 쉬운 숲길로 소개되지만, 입산 가능 시간이 정해져 있다는 점은 챙기셔야 합니다.
@@ -42,6 +44,22 @@ info:
       url: https://www.weather.go.kr/w/weather/seasonal.do
   checked: 2026-10-26
   note: "소금산 야간 프로그램 시간, 반계리 축제 운영 시간, 구룡사 일대의 실제 단풍 상태는 확인하지 못했어요. 출발 전에 원주시 관광 누리집과 국립공원공단 공지를 한 번 더 보세요."
+photos:
+- id: photo-1762780187965-c414bde372a5
+  alt: 노란 낙엽이 깔린 가을 숲길
+  credit: Andrey Tikhonovskiy
+- id: photo-1763819893069-13a2981c9e27
+  alt: 노랗게 물든 나무와 바닥에 깔린 황금빛 낙엽
+  credit: Suhwi Kim
+- id: photo-1765570710959-0298fc8e954f
+  alt: 기와지붕을 얹은 한국 전통 사찰 건물과 소나무
+  credit: Elijah Cobb
+- id: photo-1742734704375-af03a327e8b9
+  alt: 음식 가게가 늘어선 한국 전통시장 안 풍경 (서울 광장시장에서 찍은 사진)
+  credit: Luo Jin Hong
+- id: photo-1696943380870-cc99400cacdd
+  alt: 붉게 물든 단풍나무와 전통 건물
+  credit: Federica Bisso
 cards:
   - id: hero
     type: title
