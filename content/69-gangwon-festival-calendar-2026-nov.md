@@ -11,6 +11,8 @@ keywords: [11월 강원도 축제, 2026 11월 강원도 행사, 평창고랭지�
 hero:
   card: hero
   alt: 11월 강원 행사 달력 2026년 날짜를 확인한 7곳
+  bg: photo-1780413202798-b2be542614c4
+  credit: Anna Evans
 summary:
   - 2026년 11월에 열리는 강원도 행사 가운데 날짜를 확인한 7곳을 날짜순으로 담았습니다.
   - 11월 상순에는 반계리 은행나무, 평창 김장, 홍천과 양구 사과 행사가 몰려 있고, 하순에는 강릉 단단단페스티벌이 있어요.
@@ -38,6 +40,22 @@ info:
       url: https://www.danojefestival.or.kr/
   checked: 2026-10-26
   note: "기사로만 확인한 행사는 프로그램과 요금이 바뀔 수 있어요. 가기 전에 위 링크나 주최 측 안내를 한 번 더 확인하세요."
+photos:
+- id: photo-1623039594081-e4bddf5ee902
+  alt: 푸른 하늘 아래 노랗게 물든 은행나무 잎
+  credit: Cole Keister
+- id: photo-1708388466617-4368df611071
+  alt: 불판 위에서 구워지는 고기 (한우 사진은 아니에요)
+  credit: Daniel
+- id: photo-1769441071410-40528743a0ac
+  alt: 밭에 줄지어 자라는 어린 배추
+  credit: insung yoon
+- id: photo-1599988288386-29f3a55f22fa
+  alt: 나무 상자에 담긴 빨간 사과
+  credit: LeeAnn Cline
+- id: photo-1600752085601-1ec2646cd736
+  alt: 나무에 빨갛게 열린 사과
+  credit: Sokmean Nou
 cards:
   - id: hero
     type: title
