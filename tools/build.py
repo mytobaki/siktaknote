@@ -10,7 +10,7 @@ content/*.md  →  index.html, kitchen.html, local.html, posts/<slug>.html, site
 본문 표기
   [[card:id]]      front matter cards 의 카드 이미지를 넣는다
   [[photo: 설명]]  아직 사진이 없는 자리 (사이트에는 보이지 않고 주석으로만 남는다)
-  [[img:파일명|설명]]  assets/photos/파일명 사진을 넣는다
+  [[img:파일명|설명|캡션(선택)]]  assets/photos/파일명 사진을 넣는다
 
 대표 이미지
   hero: {id, alt, credit}   Unsplash 사진
@@ -156,9 +156,11 @@ def render_body(post):
         return f"\n<!-- 사진 자리: {e(m.group(1).strip())} -->\n"
 
     def img(m):
-        fname, _, alt = m.group(1).partition("|")
+        fname, _, rest = m.group(1).partition("|")
+        alt, _, cap = rest.partition("|")
+        figcap = f'<figcaption>{e(cap.strip())}</figcaption>' if cap.strip() else ""
         return (f'\n<figure class="photo-fig"><img src="../assets/photos/{e(fname.strip())}" '
-                f'alt="{e(alt.strip())}" loading="lazy"></figure>\n')
+                f'alt="{e(alt.strip())}" loading="lazy">{figcap}</figure>\n')
 
     # 무료 사진(front matter photos)은 둘째 소제목 앞부터 차례로 넣는다.
     # [[photo: ...]] 자리는 대표님 실사진(`[[img:...]]`)을 위해 그대로 비워 둔다.
