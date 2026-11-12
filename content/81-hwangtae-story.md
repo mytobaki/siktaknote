@@ -10,7 +10,9 @@ description: 황태는 명태를 겨울 덕장에서 얼리고 녹이며 말린 
 keywords: [황태, 황태 덕장, 용대리 황태마을, 대관령 황태덕장, 명태 이름, 황태와 북어 차이, 황태국, 황태 보관]
 hero:
   card: hero
-  alt: 겨울 덕장에 줄지어 걸린 명태
+  alt: 안개에 싸인 눈 덮인 겨울 산골 마을 풍경
+  bg: photo-1764942481470-1a793c4f4ea3
+  credit: Valentin Lacoste
 summary:
   - 명태는 말린 정도와 방법에 따라 생태, 동태, 코다리, 북어, 황태 같은 이름으로 불려요.
   - 황태는 겨울 덕장에서 얼고 녹기를 되풀이하며 마르는데, 추위와 바람과 눈, 이 3가지가 맞아야 한다고 소개됩니다.
@@ -34,6 +36,16 @@ info:
       url: https://xn--ok0b236bp0a.com/place/5839
   checked: 2026-11-12
   note: "평창군 누리집과 용대리 황태축제 공식 안내는 확인하지 못했어요. 덕장 풍경은 겨울철 날씨에 따라 달라지니 가시기 전에 문의처로 확인해 주세요."
+photos:
+- id: photo-1676492784729-fa1e9cf22e79
+  alt: 줄에 매달려 말라 가는 생선 (일반 사진이에요)
+  credit: sander traa
+- id: photo-1767978918948-e8b8317a1a4a
+  alt: 눈이 소복이 쌓인 겨울 숲 (일반 사진이에요)
+  credit: Dmitrii Shirnin
+- id: photo-1482207887121-32962f790ddb
+  alt: 눈과 얼음이 덮인 겨울 나뭇가지 (일반 사진이에요)
+  credit: Les Anderson
 cards:
   - id: hero
     type: title

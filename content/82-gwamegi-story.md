@@ -10,7 +10,16 @@ description: 겨울 포항 구룡포의 대표 먹거리 과메기 이야기를 
 keywords: [구룡포 과메기, 과메기 유래, 과메기 뜻, 청어 과메기, 꽁치 과메기, 과메기 먹는 법, 과메기 보관법, 구룡포 과메기 축제]
 hero:
   card: hero
-  alt: 겨울 바닷바람에 말리는 과메기
+  alt: 덕장 틀에 널어 말리는 생선
+  bg: photo-1628655951868-404b13d1cfd2
+  credit: David Veksler
+photos:
+- id: photo-1619950307197-dd82d817f8ae
+  alt: 얼음 위에 놓인 은빛 바닷물고기
+  credit: Manas Manikoth
+- id: photo-1642413140590-bbd10c24a3ae
+  alt: 빨랫줄처럼 줄에 줄줄이 걸어 말리는 생선
+  credit: Cloris Chou
 summary:
   - 과메기는 눈을 꿰어 말린다는 '관목(貫目)'에서 이름이 왔다고 전해져요.
   - 원래는 청어로 만들었지만, 청어가 줄면서 지금은 꽁치가 주로 쓰입니다.

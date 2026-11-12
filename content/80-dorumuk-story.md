@@ -10,7 +10,9 @@ description: 겨울 동해안 도루묵 이야기를 담았어요. '말짱 도�
 keywords: [도루묵, 말짱 도루묵 유래, 도루묵 제철, 알배기 도루묵, 도루묵 구이, 도루묵 조림, 도루묵 찌개, 속초 도루묵 양미리 축제]
 hero:
   card: hero
-  alt: 도루묵 이야기 겨울 동해안의 알배기 도루묵
+  alt: 추운 겨울날 바닷가로 밀려오는 파도
+  bg: photo-1738334893006-1c3cc61e4c18
+  credit: chris robert
 summary:
   - "'말짱 도루묵'은 임금이 피난길에 맛본 생선의 이름을 바꿨다가 도로 되돌렸다는 이야기에서 나왔다고 전해져요."
   - 어느 임금이었는지는 자료마다 달라서, 선조라는 설 말고도 고려 왕이나 인조라는 이야기가 있습니다.
@@ -34,6 +36,19 @@ info:
       url: https://www.wikitree.co.kr/articles/1172652
   checked: 2026-11-12
   note: "속초시 등 공식 안내 페이지는 열어 보지 못했고, 기사 두 건으로 확인했습니다. 일정과 장소는 바뀔 수 있으니 가시기 전에 속초시 안내를 한 번 더 확인해 주세요. 양양 등 다른 지역의 올해 도루묵 행사는 확인하지 못했어요."
+photos:
+- id: photo-1681027100047-371629c0855c
+  alt: 눈 덮인 산 아래 어선들이 모여 있는 겨울 항구
+  credit: Daniel Diemer
+- id: photo-1766546970865-0ff993b697b2
+  alt: 안개 낀 흐린 날 바닷가로 밀려오는 파도
+  credit: Steve Gribble
+- id: photo-1774762604828-233ec5b840d7
+  alt: 어선이 정박한 항구와 어시장 가판대
+  credit: MChe Lee
+- id: photo-1773427258262-113feee8f6df
+  alt: 시장 가판대에서 얼음 위에 진열된 신선한 생선
+  credit: Akshay Madivanan
 cards:
   - id: hero
     type: title
